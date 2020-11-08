@@ -1,0 +1,64 @@
+// See https://go.microsoft.com/fwlink/?LinkId=733558
+// for the documentation about the tasks.json format
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"label": "npm:watch",
+			"script": "watch",
+			"problemMatcher": "$tsc-watch",
+			"options": {
+				"cwd": "${workspaceFolder}/src/vscode-trxviewer"
+			},
+			"isBackground": true,
+			"presentation": {
+				"reveal": "never"
+			},
+			"group": "build"
+		},
+		{
+			"type": "npm",
+			"script": "install:out",
+			"label": "npm:install:out",
+			"options": {
+				"cwd": "${workspaceFolder}/src/vscode-trxviewer"
+			},
+			"group": "build"
+		},
+		{
+			"type": "process",
+			"label": "dotnet:watch",
+			"group": "build",
+			"command": "dotnet",
+			"isBackground": true,
+			"problemMatcher": {
+				"base": "$msCompile",
+				"background": {
+					"beginsPattern": "watch : Started",
+					"endsPattern": "watch : Waiting for a file to change before restarting dotnet..."
+				}
+			},
+			"args": [
+				"watch",
+				"-p",
+				"./src/TrxViewer.FrontEnd",
+				"publish",
+				"-o",
+				"../../out/media"
+			]
+		},
+		{
+			"label": "watch",
+			"dependsOn": [
+				"npm:watch",
+				"npm:install:out",
+				"dotnet:watch"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		}
+	]
+}

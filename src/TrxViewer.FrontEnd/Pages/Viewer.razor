@@ -1,0 +1,60 @@
+﻿@using Models
+@using Tewr.Blazor.FileReader
+@using TrxViewer.FrontEnd.Components
+@using TrxViewer.FrontEnd.Services
+@inject IFileReaderService fileReaderService;
+@inject IJsMethods _jsMethods;
+
+@if (_showFilePicker)
+{
+    <div>
+        <input type="file" @ref=inputTypeFileElement /><button @onclick=ReadFile>Read file</button>
+    </div>
+}
+
+@if (_testRun != null)
+{
+    <TestRun Value=@_testRun />
+}
+
+@code {
+    private TestRunModel _testRun;
+    private bool _showFilePicker;
+
+    private ElementReference inputTypeFileElement;
+
+    private static Action<TestRunModel> _action;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _action = UpdateTrxContent;
+        _showFilePicker = await _jsMethods.ShowFilePicker();
+    }
+
+    private static Action<string> showTest;
+
+    [JSInvokable]
+    public static void setShowTestCallBack(Action<string> callback)
+    {
+        showTest = callback;
+    }
+
+    [JSInvokable]
+    public static void UpdateMessageCaller(TestRunModel content)
+    {
+        _action(content);
+    }
+
+    public void UpdateTrxContent(TestRunModel testRun)
+    {
+        this._testRun = testRun;
+        base.StateHasChanged();
+    }
+
+    public async Task ReadFile()
+    {
+        @* var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+            _testRun = await _jsRuntime.InvokeAsync<TestRunModel>("getTestRun");
+        *@
+    }
+}

@@ -1,0 +1,54 @@
+{
+	"name": "trxviewer",
+	"displayName": "Trx viewer",
+	"description": "Allows visualizing TRX files.",
+	"version": "0.0.2",
+	"enableProposedApi": true,
+	"publisher": "scabana",
+	"engines": {
+		"vscode": "^1.46.0"
+	},
+	"categories": [
+		"Testing",
+		"Visualization"
+	],
+	"activationEvents": [
+		"onCustomEditor:trxviewer"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/scabana/trxviewer.git"
+	},
+	"main": "./vscode-trxviewer/extension.js",
+	"contributes": {
+		"customEditors": [
+			{
+				"viewType": "trxviewer",
+				"displayName": "Trx viewer",
+				"selector": [
+					{
+						"filenamePattern": "*.trx"
+					}
+				]
+			}
+		]
+	},
+	"scripts": {
+		"compile": "tsc -p ./",
+		"lint": "eslint . --ext .ts,.tsx",
+		"watch": "tsc -w -p ./",
+		"install:out": "copy \"package.json\" \"../../out/package.json\" && cd ../../out && npm install --only=production",
+		"linux:install:out": "cp \"package.json\" \"../../out/package.json\" && cp \"package-lock.json\" \"../../out/package-lock.json\" && cd ../../out && npm ci",
+		"vsce": "vsce package"
+	},
+	"devDependencies": {
+		"@types/node": "^12.12.0",
+		"@types/vscode": "^1.46.0",
+		"@typescript-eslint/eslint-plugin": "^3.0.2",
+		"@typescript-eslint/parser": "^3.0.2",
+		"eslint": "^7.1.0",
+		"typescript": "^4.0.2",
+		"vsce": "^1.81.1"
+	},
+	"dependencies": {}
+}

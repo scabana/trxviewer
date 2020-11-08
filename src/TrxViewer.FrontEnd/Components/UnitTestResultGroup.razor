@@ -1,0 +1,43 @@
+@using Models
+
+
+<fast-accordion-item expanded=@(Result == Outcome.Failed)>
+    <span slot="heading"
+        style="color: @( Result == Outcome.Failed ? "var(--red, red)": "var(--green, green)" )">@Result</span>
+    <div style="display: flex; flex-direction: column; width: 100%">
+
+        @{
+            var fitleredGroup = Values.Where(i => i.TestName.Contains(Filter));
+        }
+        <fast-accordion>
+            @foreach (var item in fitleredGroup.Take(_quantity))
+            {
+                <UnitTestResult Value=@item />
+            }
+        </fast-accordion>
+
+        @if (fitleredGroup.Count() > _quantity && _quantity < 500)
+        {
+            <text>
+                <fast-button @onclick=ShowMore>Show more</fast-button>
+            </text>
+        }
+
+    </div>
+</fast-accordion-item>
+
+@code {
+    private int _quantity = 100;
+
+    [Parameter]
+    public IEnumerable<UnitTestResultModel> Values { get; set; }
+    [Parameter]
+    public Outcome Result { get; set; }
+    [Parameter]
+    public string Filter { get; set; }
+
+    private void ShowMore()
+    {
+        _quantity += 100;
+    }
+}

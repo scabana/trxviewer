@@ -1,0 +1,64 @@
+@using Models
+@inject Services.IJsMethods _jsMethods
+
+<fast-accordion-item @onloadstart="OnLoadStart" onchange="this.dispatchEvent(new Event('loadstart'))">
+    <span slot="heading">@Value.TestName</span>
+    @if (_unitTest != null)
+    {
+        <div>
+            <div>
+                <span>Class name:</span>
+                <span>@_unitTest.TestMethodClassName</span>
+            </div>
+            <div>
+                <span>Method name:</span>
+                <a @onclick=OpenTest href="#">@_unitTest.TestMethodName</a>
+            </div>
+            @if (!string.IsNullOrEmpty(Value.Output?.ErrorInfo?.Message))
+            {
+                <div>
+                    <div>Message:</div>
+                    <pre>@Value.Output.ErrorInfo.Message</pre>
+                </div>
+            }
+            @if (!string.IsNullOrEmpty(Value.Output?.ErrorInfo?.StackTrace))
+            {
+                <div>
+                    <div>Stack Trace:</div>
+                    <pre>@Value.Output.ErrorInfo.StackTrace</pre>
+                </div>
+            }
+        </div>
+    }
+</fast-accordion-item>
+
+
+@code {
+    private UnitTestModel _unitTest;
+
+    [Parameter]
+    public UnitTestResultModel Value { get; set; }
+
+    private async Task OpenTest()
+    {
+        await _jsMethods.NavToTestMethod(Value.TestId);
+    }
+
+    private Task OnExpand()
+    {
+        Console.WriteLine("Ici");
+        return Task.CompletedTask;
+    }
+
+    //Using the onload is a hack because the onchange event triggered by the fast-accordion-item is not compatible with
+    //blazor's event handling code.
+    private async Task OnLoadStart()
+    {
+        if (_unitTest != null)
+        {
+            return;
+        }
+        _unitTest = await _jsMethods.GetTestModel(Value.TestId);
+        Value.Output = await _jsMethods.GetTestResultOutputModel(Value.TestId);
+    }
+}
