@@ -1,9 +1,9 @@
 @using Models
 
 
-<fast-accordion-item expanded=@(Result == Outcome.Failed)>
+<fast-accordion-item expanded=@(Result == Outcomes.Failed)>
     <span slot="heading"
-        style="color: @( Result == Outcome.Failed ? "var(--red, red)": "var(--green, green)" )">@Result</span>
+        style="color: @( Result == Outcomes.Failed ? "var(--red, red)": "var(--green, green)" )">@Result</span>
     <div style="display: flex; flex-direction: column; width: 100%">
 
         @{
@@ -32,7 +32,7 @@
     [Parameter]
     public IEnumerable<UnitTestResultModel> Values { get; set; }
     [Parameter]
-    public Outcome Result { get; set; }
+    public string Result { get; set; }
     [Parameter]
     public string Filter { get; set; }
 

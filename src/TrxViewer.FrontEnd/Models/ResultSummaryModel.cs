@@ -4,7 +4,7 @@ namespace TrxViewer.FrontEnd.Models
 {
 	public class ResultSummaryModel
 	{
-		[JsonConverter(typeof(JsonStringEnumConverter))]
-		public Outcome Outcome { get; set; }
+		[JsonPropertyName("outcome")]
+		public string Outcome { get; set; }
 	}
 }

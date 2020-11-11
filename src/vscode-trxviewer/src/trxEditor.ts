@@ -1,4 +1,5 @@
 import * as path from 'path';
+import { TextDecoder } from 'util';
 import * as vscode from 'vscode';
 import { WorkspaceSymbolProvider } from 'vscode';
 import { getNonce } from './util';
@@ -53,7 +54,7 @@ export class TrxEditorProvider implements vscode.CustomTextEditorProvider {
 			});
 		};
 
-		webviewPanel.webview.onDidReceiveMessage(e => {
+		webviewPanel.webview.onDidReceiveMessage((e: any) => {
 			switch (e.type) {
 				case 'navToTest':
 					vscode.commands.executeCommand("vscode.executeWorkspaceSymbolProvider", e.symbolName).then(
@@ -62,7 +63,7 @@ export class TrxEditorProvider implements vscode.CustomTextEditorProvider {
 
 							let symbol = symbols.filter(i => i.kind == vscode.SymbolKind.Method)[0];
 							//symbol.
-							vscode.workspace.openTextDocument(symbol.location.uri).then(editor => {
+							vscode.workspace.openTextDocument(symbol.location.uri).then((editor: any) => {
 								var { start, end } = symbol.location.range;
 								const selection = new vscode.Selection(start.line, start.character, start.line, end.character);
 								vscode.window.showTextDocument(editor).then(() => {
@@ -107,11 +108,18 @@ export class TrxEditorProvider implements vscode.CustomTextEditorProvider {
 
 		// Use a nonce to whitelist which scripts can be run
 
+		let encoder = new TextDecoder("utf-8");
+
 		const index = await vscode.workspace.fs.readFile(vscode.Uri.file(
 			path.join(this.context.extensionPath, 'media/wwwroot', 'vs-code.html')
 		));
+		let indexText = encoder.decode(index);
 
-		let indexText = String.fromCharCode.apply(null, index as any as number[]);
+		const js = await vscode.workspace.fs.readFile(vscode.Uri.file(
+			path.join(this.context.extensionPath, 'media/wwwroot/scripts', 'app.js')
+		));
+		let scriptText = encoder.decode(js);
+
 
 		// Can't use csp for the moment because we use wasm and eval is not allowed. Because the wasm file comes with a application/UNKNOWN content-type.
 		// const nonce = getNonce();
@@ -119,6 +127,9 @@ export class TrxEditorProvider implements vscode.CustomTextEditorProvider {
 		// indexText = indexText.replace(/<script/gi, `<script nonce="${nonce}"`);
 
 		indexText = indexText.replace("<base href=\"/\" />", `<base href="${base}/" />`);
+		// 		indexText = indexText.replace("<script src=\"script/vscode-index.js\"></script>", `<script type="application/javascript">
+		// ${scriptText}
+		// </script>`);
 
 		return indexText;
 	}
