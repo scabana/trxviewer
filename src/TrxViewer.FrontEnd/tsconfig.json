@@ -1,28 +1,16 @@
 {
 	"compilerOptions": {
-		"pretty": true,
-		"target": "ES2015",
-		"module": "ES2015",
-		"moduleResolution": "node",
-		"importHelpers": true,
-		"experimentalDecorators": true,
-		"emitDecoratorMetadata": true,
-		"declaration": true,
-		"declarationMap": true,
+		"outDir": "./built/",
 		"sourceMap": true,
-		"noEmitOnError": true,
-		"skipLibCheck": true,
-		"preserveConstEnums": true,
-		"stripInternal": true,
 		"strict": false,
-		"outDir": "wwwroot/scripts/build",
-		"rootDir": "Scripts",
-		"lib": [
-			"dom",
-			"esnext"
-		]
+		"module": "es2015",
+		"moduleResolution": "node",
+		"target": "es5",
+		"skipLibCheck": true,
+		"esModuleInterop": true,
+		"experimentalDecorators": true
 	},
 	"include": [
-		"Scripts"
+		"./src/**/*"
 	]
 }

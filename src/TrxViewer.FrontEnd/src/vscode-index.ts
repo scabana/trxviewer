@@ -1,5 +1,5 @@
 import { createColorPalette, parseColorString } from "@microsoft/fast-components";
-import { parseStringToTestResult, parseStringXml, context, Context } from "./index";
+import { parseStringToTestResult, parseStringXml, context, Context, updateTestRun } from "./index";
 
 interface VsCodeWebView {
 	getState: () => any,
@@ -12,8 +12,6 @@ interface VsCodeContext extends Context {
 }
 
 let vsCodeContext = context as VsCodeContext;
-let blazor = context.window["Blazor"];
-let dotNet = context.window["DotNet"];
 
 vsCodeContext.vscode = context.window["acquireVsCodeApi"]();
 
@@ -53,14 +51,12 @@ context.window.addEventListener('message', event => {
 			{
 				const content = message.content;
 
-				context.startPromise?.then(() => {
-					vsCodeContext.vscode.setState(content);
-					let xmlDocument = parseStringXml(content);
-					context.testResultXmlDocument = xmlDocument;
-					let testResult = parseStringToTestResult(xmlDocument);
+				vsCodeContext.vscode.setState(content);
+				let xmlDocument = parseStringXml(content);
+				context.testResultXmlDocument = xmlDocument;
+				let testResult = parseStringToTestResult(xmlDocument);
 
-					dotNet.invokeMethodAsync('TrxViewer.FrontEnd', 'UpdateMessageCaller', testResult);
-				});
+				updateTestRun(testResult);
 			}
 	}
 });
@@ -89,21 +85,9 @@ function normalizeColor(colorString) {
 	return colorString;
 }
 
-/*
-	Hack to get it to load in vscode.
-	*/
-
-blazor._internal.navigationManager.getLocationHref = function () {
-	return document.baseURI;
-}
-
-context.startPromise = blazor.start();
-
 let state = vsCodeContext.vscode.getState();
 if (state) {
 	context.testResultXmlDocument = parseStringXml(state);
-	context.startPromise.then(() => {
-		dotNet.invokeMethodAsync('TrxViewer.FrontEnd', 'UpdateMessageCaller', parseStringToTestResult(context.testResultXmlDocument));
-	});
+	updateTestRun(parseStringToTestResult(context.testResultXmlDocument));
 }
 

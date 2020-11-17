@@ -1,9 +1,14 @@
-import { FASTDesignSystemProvider, FASTTextField, FASTAccordion, FASTAccordionItem } from "@microsoft/fast-components";
+import Vue from 'vue'
+import App from './App.vue'
 
-FASTDesignSystemProvider;
-FASTTextField;
-FASTAccordion;
-FASTAccordionItem;
+let app = new Vue({
+	el: "#app",
+	render: r => r(App),
+	data: {
+		testRun: null
+	}
+});
+window["app"] = app;
 
 export interface Context {
 	window: Window,
@@ -37,7 +42,7 @@ export let context: Context = {
 		showFilePicker: () => true,
 		navToTestMethod: () => { },
 		getTestModel: testId => {
-			let test = context.testResultXmlDocument.querySelector(`TestDefinitions > UnitTest[id = "${testId}"]`);
+			let test = context.testResultXmlDocument.querySelector(`TestDefinitions>UnitTest[id="${testId}"]`);
 			let testMethod = test.querySelector("TestMethod");
 
 			return {
@@ -47,7 +52,7 @@ export let context: Context = {
 			}
 		},
 		getTestResultOutputModel: testId => {
-			let errorInfo = context.testResultXmlDocument.querySelector(`Results > UnitTestResult[testId = "${testId}"] > Output > ErrorInfo`);
+			let errorInfo = context.testResultXmlDocument.querySelector(`Results>UnitTestResult[testId="${testId}"] > Output > ErrorInfo`);
 
 			if (errorInfo == null) {
 				return null;
@@ -95,17 +100,6 @@ export function parseStringToTestResult(xmlDocument) {
 	return jsonObject;
 }
 
-// function getTestRun() {
-// 	return new Promise((resolve, reject) => {
-// 		let fileInput = document.getElementsByTagName("input")[0];
-
-// 		let fileRef = fileInput.files[0];
-
-// 		var reader = new FileReader();
-// 		reader.readAsText(fileRef, "UTF-8");
-
-// 		reader.onload = function (evt) {
-// 			return resolve(parseStringToTestResult(evt.target.result));
-// 		}
-// 	});
-// }
+export function updateTestRun(testRun) {
+	app["testRun"] = testRun;
+}

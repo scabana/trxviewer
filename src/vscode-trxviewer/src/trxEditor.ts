@@ -1,8 +1,6 @@
 import * as path from 'path';
 import { TextDecoder } from 'util';
 import * as vscode from 'vscode';
-import { WorkspaceSymbolProvider } from 'vscode';
-import { getNonce } from './util';
 
 /**
  * Provider for cat scratch editors.
@@ -103,7 +101,7 @@ export class TrxEditorProvider implements vscode.CustomTextEditorProvider {
 		// 	path.join(this.context.extensionPath, 'media', 'catScratch.js')
 		// ));
 		const base = webview.asWebviewUri(vscode.Uri.file(
-			path.join(this.context.extensionPath, 'media/wwwroot')
+			path.join(this.context.extensionPath, 'media')
 		));
 
 		// Use a nonce to whitelist which scripts can be run
@@ -111,12 +109,12 @@ export class TrxEditorProvider implements vscode.CustomTextEditorProvider {
 		let encoder = new TextDecoder("utf-8");
 
 		const index = await vscode.workspace.fs.readFile(vscode.Uri.file(
-			path.join(this.context.extensionPath, 'media/wwwroot', 'vs-code.html')
+			path.join(this.context.extensionPath, 'media', 'vs-code.html')
 		));
 		let indexText = encoder.decode(index);
 
 		const js = await vscode.workspace.fs.readFile(vscode.Uri.file(
-			path.join(this.context.extensionPath, 'media/wwwroot/scripts', 'app.js')
+			path.join(this.context.extensionPath, 'media/scripts', 'app.js')
 		));
 		let scriptText = encoder.decode(js);
 

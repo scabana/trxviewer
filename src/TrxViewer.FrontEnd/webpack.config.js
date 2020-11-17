@@ -1,24 +1,34 @@
 const path = require('path');
+const { VueLoaderPlugin } = require("vue-loader");
 
 module.exports = {
-	entry: './Scripts/vscode-index.ts',
-	devtool: 'source-map',
+	entry: './src/vscode-index.ts',
+	devtool: 'inline-source-map',
 	module: {
 		rules: [
 			{
-				test: /\.ts$/i,
-				use: [
-					{
-						loader: 'ts-loader'
-					}
-				],
-				exclude: /node_modules/
-			}
+				test: /\.vue$/,
+				loader: "vue-loader",
+			},
+			{
+				test: /\.tsx?$/,
+				loader: 'ts-loader',
+				exclude: /node_modules/,
+				options: {
+					appendTsSuffixTo: [/\.vue$/],
+				}
+			},
+			{
+				test: /\.css$/,
+				use: ["css-loader"]
+			},
 		]
 	},
 	resolve: {
-		extensions: ['.ts', '.js'],
-		modules: ['Scripts', 'node_modules']
+		extensions: ['.ts', '.js', '.vue', '.json'],
+		alias: {
+			'vue$': 'vue/dist/vue.esm.js'
+		}
 	},
 	output: {
 		filename: 'app.js',
@@ -27,5 +37,9 @@ module.exports = {
 	// optimization: {
 	// 	usedExports: true,
 	// },
-	mode: 'production'
+	mode: 'production',
+	plugins: [
+		// make sure to include the plugin for the magic
+		new VueLoaderPlugin()
+	]
 };

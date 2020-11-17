@@ -16,7 +16,7 @@
 			"outFiles": [
 				"${workspaceFolder}/out/**/*.*",
 			],
-			//"preLaunchTask": "watch"
+			"preLaunchTask": "debug:copyfiles"
 		}
 	]
 }
