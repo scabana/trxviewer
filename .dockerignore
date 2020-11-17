@@ -1,5 +1,6 @@
 **/node_modules/
 **/bin/
 **/obj/
-/out
-**/wwwroot/script/npm/
+**/out
+**/wwwroot/scripts
+

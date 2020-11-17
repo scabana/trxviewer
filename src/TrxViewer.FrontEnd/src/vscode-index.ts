@@ -1,5 +1,12 @@
-import { createColorPalette, parseColorString } from "@microsoft/fast-components";
-import { parseStringToTestResult, parseStringXml, context, Context, updateTestRun } from "./index";
+import { createColorPalette, FASTDesignSystemProvider, parseColorString } from "@microsoft/fast-components";
+import { parseDocumentToTestRun, parseStringXml, context, Context, updateTestRun } from "./index";
+import { } from "vscode";
+
+declare global {
+	interface Window {
+		acquireVsCodeApi: () => any;
+	}
+}
 
 interface VsCodeWebView {
 	getState: () => any,
@@ -13,34 +20,37 @@ interface VsCodeContext extends Context {
 
 let vsCodeContext = context as VsCodeContext;
 
-vsCodeContext.vscode = context.window["acquireVsCodeApi"]();
+vsCodeContext.vscode = context.window.acquireVsCodeApi();
 
 context.window.document.addEventListener("readystatechange", () => {
-	var observer = new MutationObserver(() => {
+	let observer = new MutationObserver(() => {
 
 		var backgroundValue = normalizeColor(document.documentElement.style.getPropertyValue("--vscode-editorPane-background"));
 		var accentColor = normalizeColor(document.documentElement.style.getPropertyValue("--vscode-focusBorder"));
 
-		for (var item of Array.from(document.getElementsByTagName("fast-design-system-provider"))) {
-			if (item["accentBaseColor"] != accentColor) {
-				item["accentBaseColor"] = accentColor;
-				item["accentPalette"] = createColorPalette(parseColorString(accentColor));
-			}
-			if (item["backgroundColor"] != backgroundValue) {
-				item["backgroundColor"] = backgroundValue;
-				item["neutralPalette"] = createColorPalette(parseColorString(backgroundValue));
-			}
-		}
+		for (let item of Array.from(document.getElementsByTagName("fast-design-system-provider"))) {
 
-		if (document.documentElement.style.getPropertyValue("--background-color") != document.getElementsByTagName("fast-design-system-provider")[0]["backgroundColor"]) {
-			document.documentElement.style.setProperty('--background-color', document.getElementsByTagName("fast-design-system-provider")[0]["backgroundColor"]);
+			let typedItem: FASTDesignSystemProvider = item as FASTDesignSystemProvider;
+
+			if (typedItem.accentBaseColor != accentColor) {
+				typedItem.accentBaseColor = accentColor;
+				typedItem.accentPalette = createColorPalette(parseColorString(accentColor));
+			}
+			if (typedItem.backgroundColor != backgroundValue) {
+				typedItem.backgroundColor = backgroundValue;
+				typedItem.neutralPalette = createColorPalette(parseColorString(backgroundValue));
+			}
+
+			if (document.documentElement.style.getPropertyValue("--background-color") != typedItem.backgroundColor) {
+				document.documentElement.style.setProperty('--background-color', typedItem.backgroundColor);
+			}
 		}
 	});
 
 	observer.observe(document.documentElement, { attributes: true, attributeFilter: ['style'] });
 
-	for (var item of Array.from(document.getElementsByTagName("fast-design-system-provider"))) {
-		item["backgroundColor"] = document.documentElement.style.getPropertyValue("--vscode-editorPane-background");
+	for (let item of Array.from(document.getElementsByTagName("fast-design-system-provider"))) {
+		(item as FASTDesignSystemProvider).backgroundColor = document.documentElement.style.getPropertyValue("--vscode-editorPane-background");
 	}
 });
 
@@ -54,7 +64,7 @@ context.window.addEventListener('message', event => {
 				vsCodeContext.vscode.setState(content);
 				let xmlDocument = parseStringXml(content);
 				context.testResultXmlDocument = xmlDocument;
-				let testResult = parseStringToTestResult(xmlDocument);
+				let testResult = parseDocumentToTestRun(xmlDocument);
 
 				updateTestRun(testResult);
 			}
@@ -69,25 +79,25 @@ context.blazorCallbacks.navToTestMethod = testId => {
 	vsCodeContext.vscode.postMessage({ type: "navToTest", symbolName: `${test.testMethodClassName}.${test.testMethodName}` });
 };
 
-function normalizeColor(colorString) {
-	if (typeof colorString != "string") {
-		return colorString;
+function normalizeColor(color: string | any) {
+	if (typeof color != "string") {
+		return color;
 	}
 
-	if (colorString.startsWith("rgba")) {
+	if (color.startsWith("rgba")) {
 
-		let content = (/rgba\((?<content>.+)\)/.exec(colorString) as any).groups.content;
+		let content = (/rgba\((?<content>.+)\)/.exec(color) as any).groups.content;
 		let newContent = content.split(",").splice(0, 3).join(",");
 
 		return `rgb(${newContent})`;
 	}
 
-	return colorString;
+	return color;
 }
 
 let state = vsCodeContext.vscode.getState();
 if (state) {
 	context.testResultXmlDocument = parseStringXml(state);
-	updateTestRun(parseStringToTestResult(context.testResultXmlDocument));
+	updateTestRun(parseDocumentToTestRun(context.testResultXmlDocument));
 }
 
