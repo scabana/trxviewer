@@ -7,7 +7,6 @@
 <script lang="ts">
 import Vue from "vue";
 import { FASTButton } from "@microsoft/fast-components";
-import { context } from "../index";
 import { Fragment } from "vue-fragment";
 
 FASTButton;

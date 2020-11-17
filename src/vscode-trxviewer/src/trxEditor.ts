@@ -1,19 +1,8 @@
 import * as path from 'path';
 import { TextDecoder } from 'util';
 import * as vscode from 'vscode';
+import { getNonce } from './util';
 
-/**
- * Provider for cat scratch editors.
- * 
- * Cat scratch editors are used for `.cscratch` files, which are just json files.
- * To get started, run this extension and open an empty `.cscratch` file in VS Code.
- * 
- * This provider demonstrates:
- * 
- * - Setting up the initial webview for a custom editor.
- * - Loading scripts and styles in a custom editor.
- * - Synchronizing changes between a text document and a custom editor.
- */
 export class TrxEditorProvider implements vscode.CustomTextEditorProvider {
 
 	public static register(context: vscode.ExtensionContext): vscode.Disposable {
@@ -26,13 +15,9 @@ export class TrxEditorProvider implements vscode.CustomTextEditorProvider {
 
 	constructor(
 		private readonly context: vscode.ExtensionContext
-	) { }
+	) {
+	}
 
-	/**
-	 * Called when our custom editor is opened.
-	 * 
-	 * 
-	 */
 	public async resolveCustomTextEditor(
 		document: vscode.TextDocument,
 		webviewPanel: vscode.WebviewPanel,
@@ -58,36 +43,16 @@ export class TrxEditorProvider implements vscode.CustomTextEditorProvider {
 					vscode.commands.executeCommand("vscode.executeWorkspaceSymbolProvider", e.symbolName).then(
 						s => {
 							const symbols: vscode.SymbolInformation[] = s as vscode.SymbolInformation[];
+							const symbol = symbols.filter(i => i.kind == vscode.SymbolKind.Method)[0];
+							const { start, end } = symbol.location.range;
+							const selection = new vscode.Selection(start.line, start.character, start.line, end.character);
 
-							let symbol = symbols.filter(i => i.kind == vscode.SymbolKind.Method)[0];
-							//symbol.
-							vscode.workspace.openTextDocument(symbol.location.uri).then((editor: any) => {
-								var { start, end } = symbol.location.range;
-								const selection = new vscode.Selection(start.line, start.character, start.line, end.character);
-								vscode.window.showTextDocument(editor).then(() => {
-									const editor = vscode.window.activeTextEditor;
-									if (editor) {
-										editor.selection = selection;
-										editor.revealRange(selection, vscode.TextEditorRevealType.InCenter);
-									}
-								});
-							})
+							vscode.window.showTextDocument(symbol.location.uri, { selection });
 						}
 					);
 					return;
 			}
 		});
-
-		// const changeDocumentSubscription = vscode.workspace.onDidChangeTextDocument(e => {
-		// 	if (e.document.uri.toString() === document.uri.toString()) {
-		// 		updateWebview();
-		// 	}
-		// });
-
-		// Make sure we get rid of the listener when our editor is closed.
-		// webviewPanel.onDidDispose(() => {
-		// 	changeDocumentSubscription.dispose();
-		// });
 
 		updateWebview();
 	}
@@ -106,28 +71,20 @@ export class TrxEditorProvider implements vscode.CustomTextEditorProvider {
 
 		// Use a nonce to whitelist which scripts can be run
 
-		let encoder = new TextDecoder("utf-8");
+		const encoder = new TextDecoder("utf-8");
 
 		const index = await vscode.workspace.fs.readFile(vscode.Uri.file(
 			path.join(this.context.extensionPath, 'media', 'vs-code.html')
 		));
 		let indexText = encoder.decode(index);
 
-		const js = await vscode.workspace.fs.readFile(vscode.Uri.file(
-			path.join(this.context.extensionPath, 'media/scripts', 'app.js')
-		));
-		let scriptText = encoder.decode(js);
+		const nonce = getNonce();
 
-
-		// Can't use csp for the moment because we use wasm and eval is not allowed. Because the wasm file comes with a application/UNKNOWN content-type.
-		// const nonce = getNonce();
-		// indexText = indexText.replace("<meta charset=\"utf-8\" />", `<meta charset="UTF-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none';connect-src ${webview.cspSource};img-src ${webview.cspSource}; style-src ${webview.cspSource}; script-src 'nonce-${nonce}' 'sha256-v8v3RKRPmN4odZ1CWM5gw80QKPCCWMcpNeOmimNL2AA=' 'sha256-0U0xZwqssxtrm2zqzr1ElYK99IcQMyne3zhgTEhtLos=';" />`);
-		// indexText = indexText.replace(/<script/gi, `<script nonce="${nonce}"`);
+		indexText = indexText.replace("<meta charset=\"utf-8\" />", `<meta charset="UTF-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none';img-src ${webview.cspSource}; style-src ${webview.cspSource} 'unsafe-inline'; script-src 'nonce-${nonce}';" />`);
+		indexText = indexText.replace(/<script/gi, `<script nonce="${nonce}"`);
+		indexText = indexText.replace(/<link/gi, `<link nonce="${nonce}"`);
 
 		indexText = indexText.replace("<base href=\"/\" />", `<base href="${base}/" />`);
-		// 		indexText = indexText.replace("<script src=\"script/vscode-index.js\"></script>", `<script type="application/javascript">
-		// ${scriptText}
-		// </script>`);
 
 		return indexText;
 	}

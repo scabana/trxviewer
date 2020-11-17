@@ -1,28 +1,23 @@
 import { createColorPalette, FASTDesignSystemProvider, parseColorString } from "@microsoft/fast-components";
-import { parseDocumentToTestRun, parseStringXml, context, Context, updateTestRun } from "./index";
-import { } from "vscode";
+import { updateTestRun, callbacks } from "./index";
+import { normalizeColor } from "./utils/styles";
 
 declare global {
 	interface Window {
-		acquireVsCodeApi: () => any;
+		acquireVsCodeApi: () => VsCodeWebView;
 	}
+
+	interface VsCodeWebView {
+		getState: () => any,
+		setState: (state: any) => void,
+		postMessage: (message: any) => void
+	}
+
 }
 
-interface VsCodeWebView {
-	getState: () => any,
-	setState: (state: any) => void,
-	postMessage: (message: any) => void
-}
+let vscode = window.acquireVsCodeApi();
 
-interface VsCodeContext extends Context {
-	vscode: VsCodeWebView
-}
-
-let vsCodeContext = context as VsCodeContext;
-
-vsCodeContext.vscode = context.window.acquireVsCodeApi();
-
-context.window.document.addEventListener("readystatechange", () => {
+window.document.addEventListener("readystatechange", () => {
 	let observer = new MutationObserver(() => {
 
 		var backgroundValue = normalizeColor(document.documentElement.style.getPropertyValue("--vscode-editorPane-background"));
@@ -54,50 +49,27 @@ context.window.document.addEventListener("readystatechange", () => {
 	}
 });
 
-context.window.addEventListener('message', event => {
+window.addEventListener('message', event => {
 	const message = event.data; // The json data that the extension sent
 	switch (message.type) {
 		case 'update':
 			{
 				const content = message.content;
-
-				vsCodeContext.vscode.setState(content);
-				let xmlDocument = parseStringXml(content);
-				context.testResultXmlDocument = xmlDocument;
-				let testResult = parseDocumentToTestRun(xmlDocument);
-
-				updateTestRun(testResult);
+				vscode.setState(content);
+				updateTestRun(content);
 			}
 	}
 });
 
-context.blazorCallbacks.showFilePicker = () => false;
-context.blazorCallbacks.canShowTest = () => true;
-context.blazorCallbacks.navToTestMethod = testId => {
-
-	let test = context.blazorCallbacks.getTestModel(testId);
-	vsCodeContext.vscode.postMessage({ type: "navToTest", symbolName: `${test.testMethodClassName}.${test.testMethodName}` });
+callbacks.showFilePicker = () => false;
+callbacks.canShowTest = () => true;
+callbacks.navToTestMethod = testId => {
+	let test = callbacks.getTestModel(testId);
+	vscode.postMessage({ type: "navToTest", symbolName: `${test.testMethodClassName}.${test.testMethodName}` });
 };
 
-function normalizeColor(color: string | any) {
-	if (typeof color != "string") {
-		return color;
-	}
-
-	if (color.startsWith("rgba")) {
-
-		let content = (/rgba\((?<content>.+)\)/.exec(color) as any).groups.content;
-		let newContent = content.split(",").splice(0, 3).join(",");
-
-		return `rgb(${newContent})`;
-	}
-
-	return color;
-}
-
-let state = vsCodeContext.vscode.getState();
+let state = vscode.getState();
 if (state) {
-	context.testResultXmlDocument = parseStringXml(state);
-	updateTestRun(parseDocumentToTestRun(context.testResultXmlDocument));
+	updateTestRun(state);
 }
 

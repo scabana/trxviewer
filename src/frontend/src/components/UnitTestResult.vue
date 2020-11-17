@@ -23,7 +23,7 @@
 </template>
 <script lang="ts">
 import Vue from "vue";
-import { context } from "../index";
+import { callbacks } from "../index";
 import { FASTAccordionItem } from "@microsoft/fast-components";
 
 FASTAccordionItem;
@@ -47,11 +47,11 @@ export default Vue.extend({
       if (this.output) {
         return;
       }
-      this.testModel = context.blazorCallbacks.getTestModel(this.item.testId);
-      this.output = context.blazorCallbacks.getTestResultOutputModel(this.item.testId);
+      this.testModel = callbacks.getTestModel(this.item.testId);
+      this.output = callbacks.getTestResultOutputModel(this.item.testId);
     },
     openTest() {
-      this.testModel = context.blazorCallbacks.navToTestMethod(this.item.testId);
+      this.testModel = callbacks.navToTestMethod(this.item.testId);
     },
   },
 });

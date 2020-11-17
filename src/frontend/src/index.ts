@@ -1,6 +1,9 @@
 import { FASTDesignSystemProvider } from '@microsoft/fast-components';
 import Vue from 'vue'
 import App from './App.vue'
+import TestRun from './models/TestRun';
+import { parseDocumentToTestRun, parseStringXml } from './utils/trx';
+import { Callbacks } from './models/Callbacks';
 
 let app: Vue = new Vue({
 	el: "#app",
@@ -9,6 +12,8 @@ let app: Vue = new Vue({
 		testRun: null
 	}
 });
+
+let testRunDocument: Document | null = null;
 
 declare module 'vue/types/vue' {
 	// 3. Declare augmentation for Vue
@@ -25,65 +30,37 @@ declare global {
 
 window.app = app;
 
-export interface Context {
-	window: Window,
-	testResultXmlDocument?: Document,
-	blazorCallbacks: BlazorCallbacks,
-	startPromise?: Promise<undefined>,
-}
+export let callbacks: Callbacks = {
+	canShowTest: () => false,
+	showFilePicker: () => true,
+	navToTestMethod: () => { },
+	getTestModel: testId => {
+		let test = testRunDocument?.querySelector(`TestDefinitions>UnitTest[id="${testId}"]`);
+		let testMethod = test?.querySelector("TestMethod");
 
-interface BlazorCallbacks {
-	canShowTest: () => boolean,
-	showFilePicker: () => boolean,
-	navToTestMethod: (testId: string) => void,
-	getTestModel: (testId: string) => TestModel,
-	getTestResultOutputModel: (testId: string) => TestResultOutputModel | null,
-}
-
-interface TestModel {
-	testMethodName: string;
-	testMethodClassName: string;
-
-}
-
-interface TestResultOutputModel {
-
-}
-
-export let context: Context = {
-	window,
-	blazorCallbacks: {
-		canShowTest: () => false,
-		showFilePicker: () => true,
-		navToTestMethod: () => { },
-		getTestModel: testId => {
-			let test = context.testResultXmlDocument?.querySelector(`TestDefinitions>UnitTest[id="${testId}"]`);
-			let testMethod = test?.querySelector("TestMethod");
-
-			return {
-				name: test?.getAttribute("name") || "",
-				testMethodClassName: testMethod?.getAttribute("className") || "",
-				testMethodName: testMethod?.getAttribute("name") || "",
-			}
-		},
-		getTestResultOutputModel: testId => {
-			let errorInfo = context.testResultXmlDocument?.querySelector(`Results>UnitTestResult[testId="${testId}"] > Output > ErrorInfo`);
-
-			if (errorInfo == null) {
-				return null;
-			}
-
-			return {
-				errorInfo: {
-					message: errorInfo?.querySelector("Message")?.innerHTML || "",
-					stackTrace: errorInfo?.querySelector("StackTrace")?.innerHTML || ""
-				}
-			};
+		return {
+			name: test?.getAttribute("name") || "",
+			testMethodClassName: testMethod?.getAttribute("className") || "",
+			testMethodName: testMethod?.getAttribute("name") || "",
 		}
 	},
+	getTestResultOutputModel: testId => {
+		let errorInfo = testRunDocument?.querySelector(`Results>UnitTestResult[testId="${testId}"] > Output > ErrorInfo`);
+
+		if (errorInfo == null) {
+			return null;
+		}
+
+		return {
+			errorInfo: {
+				message: errorInfo?.querySelector("Message")?.innerHTML || "",
+				stackTrace: errorInfo?.querySelector("StackTrace")?.innerHTML || ""
+			}
+		};
+	}
 };
 
-context.window.document.addEventListener("readystatechange", () => {
+window.document.addEventListener("readystatechange", () => {
 
 	const elements = document.getElementsByTagName("fast-design-system-provider");
 
@@ -96,48 +73,8 @@ context.window.document.addEventListener("readystatechange", () => {
 	document.documentElement.style.setProperty('--background-color', designSystem.backgroundColor);
 });
 
-export function parseStringXml(string: string) {
-	let parser = new DOMParser();
-	return parser.parseFromString(string, "application/xml");
-}
 
-interface TestRun {
-	resultSummary: ResultSummary
-	results: UnitTestResult[]
-}
-
-
-
-interface ResultSummary {
-	outcome: string
-}
-
-interface UnitTestResult {
-
-}
-
-export function parseDocumentToTestRun(xmlDocument: Document) {
-
-	let summary = xmlDocument.documentElement.querySelector("ResultSummary");
-
-	let jsonObject: TestRun = {
-		resultSummary: {
-			outcome: summary?.getAttribute("outcome") || ""
-		},
-		results: []
-	};
-
-	for (let item of Array.from(xmlDocument.documentElement.querySelectorAll("Results>UnitTestResult"))) {
-		jsonObject.results.push({
-			testName: item.getAttribute("testName"),
-			outcome: item.getAttribute("outcome"),
-			testId: item.getAttribute("testId")
-		});
-	}
-
-	return jsonObject;
-}
-
-export function updateTestRun(testRun: TestRun) {
-	app.testRun = testRun;
+export function updateTestRun(testRun: string) {
+	testRunDocument = parseStringXml(testRun);
+	app.testRun = parseDocumentToTestRun(testRunDocument);
 }

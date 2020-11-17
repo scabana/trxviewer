@@ -5,7 +5,6 @@
 </template>
 <script lang="ts">
 import Vue from "vue";
-import { context } from "../index";
 import { Fragment } from "vue-fragment";
 export default Vue.extend({
   name: "filtered-results",
