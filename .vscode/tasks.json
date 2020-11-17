@@ -34,7 +34,7 @@
 				"reveal": "never"
 			},
 			"windows": {
-				"command": "rm -r ./out/media; Copy-Item -Recurse ./src/TrxViewer.FrontEnd/wwwroot ./out/media"
+				"command": "rm -r ./out/media; Copy-Item -Recurse ./src/frontend/wwwroot ./out/media"
 			},
 			"command": "rm -r ./out/media "
 		},
@@ -60,7 +60,7 @@
 				]
 			},
 			"options": {
-				"cwd": "${workspaceFolder}/src/TrxViewer.FrontEnd"
+				"cwd": "${workspaceFolder}/src/frontend"
 			},
 			"isBackground": true,
 			"presentation": {

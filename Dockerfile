@@ -1,14 +1,14 @@
 FROM node:12-alpine3.12 AS build-env-fontend-node
 COPY . ./app
 
-WORKDIR /app/src/TrxViewer.FrontEnd
+WORKDIR /app/src/frontend
 
 RUN npm ci && npm run copydependencies
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build-env-frontend-dotnet
 
 COPY --from=build-env-fontend-node /app /app
-WORKDIR /app/src/TrxViewer.FrontEnd
+WORKDIR /app/src/frontend
 
 RUN dotnet publish -o /out
 
