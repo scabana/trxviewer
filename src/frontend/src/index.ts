@@ -16,7 +16,6 @@ let app: Vue = new Vue({
 let testRunDocument: Document | null = null;
 
 declare module 'vue/types/vue' {
-	// 3. Declare augmentation for Vue
 	interface Vue {
 		testRun: TestRun
 	}
