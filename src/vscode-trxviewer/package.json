@@ -9,8 +9,15 @@
 		"vscode": "^1.46.0"
 	},
 	"categories": [
+		"Visualization",
+		"Other"
+	],
+	"keywords": [
 		"Testing",
-		"Visualization"
+		"trx",
+		"MsTest",
+		"VsTest",
+		"xUnit"
 	],
 	"activationEvents": [
 		"onCustomEditor:trxviewer"
@@ -40,7 +47,7 @@
 		"lint": "eslint . --ext .ts,.tsx",
 		"watch": "tsc -w -p ./",
 		"install:out": "copy \"package.json\" \"../../out/package.json\" && cd ../../out && npm install --only=production",
-		"linux:install:out": "cp package.json icon.ico package-lock.json ../../out/ && cd ../../out && npm ci",
+		"linux:install:out": "cp package.json icon.ico package-lock.json ../../LICENSE ../../out/ && cd ../../out && npm ci",
 		"vsce": "vsce package"
 	},
 	"devDependencies": {
