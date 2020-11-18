@@ -17,5 +17,6 @@ jobs:
     - name: Upload vsix Build Artifact
       uses: actions/upload-artifact@v2.2.1
       with:
-        path: /out/*.vsix
+        path: $(pwd)/out/*.vsix
+        if-no-files-found: error
     
