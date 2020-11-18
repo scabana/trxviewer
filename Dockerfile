@@ -2,7 +2,9 @@ FROM node:12-alpine3.12 AS build-env
 COPY . ./app
 
 WORKDIR /app/src/frontend
-RUN npm ci && npm run webpack && mkdir /app/out && cp -r /app/src/frontend/wwwroot /app/out/media
+RUN npm ci && npm run webpack:prod && \
+	mkdir /app/out && \
+	cp -r /app/src/frontend/wwwroot /app/out/media
 
 WORKDIR /app/src/vscode-trxviewer
 RUN npm ci && \

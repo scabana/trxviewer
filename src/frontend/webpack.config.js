@@ -1,7 +1,8 @@
 const path = require('path');
+const webpack = require('webpack')
 const { VueLoaderPlugin } = require("vue-loader");
 
-module.exports = {
+let config = {
 	entry: './src/vscode-index.ts',
 	devtool: 'inline-source-map',
 	module: {
@@ -34,12 +35,18 @@ module.exports = {
 		filename: 'app.js',
 		path: path.resolve(__dirname, 'wwwroot/scripts'),
 	},
-	// optimization: {
-	// 	usedExports: true,
-	// },
-	mode: 'production',
+	mode: 'development',
 	plugins: [
 		// make sure to include the plugin for the magic
 		new VueLoaderPlugin()
 	]
 };
+
+module.exports = (env, argv) => {
+	if (argv.mode === 'production') {
+		config.mode = 'production';
+		config.devtool = 'source-map';
+	}
+
+	return config;
+}
