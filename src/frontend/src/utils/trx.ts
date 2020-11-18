@@ -13,9 +13,9 @@ export function parseDocumentToTestRun(xmlDocument: Document) {
 
 	for (let item of Array.from(xmlDocument.documentElement.querySelectorAll("Results>UnitTestResult"))) {
 		jsonObject.results.push({
-			testName: item.getAttribute("testName"),
-			outcome: item.getAttribute("outcome"),
-			testId: item.getAttribute("testId")
+			testName: item.getAttribute("testName") || "",
+			outcome: item.getAttribute("outcome") || "",
+			testId: item.getAttribute("testId") || ""
 		});
 	}
 

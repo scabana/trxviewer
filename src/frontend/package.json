@@ -1,8 +1,5 @@
 {
 	"scripts": {
-		"createdir": "npx mkdirp wwwroot/script/npm",
-		"copy": "npx copyfiles node_modules/@microsoft/fast-components/dist/fast-components.min.js wwwroot/script/npm/ -f",
-		"copydependencies": "npm run createdir && npm run copy",
 		"webpack": "npx webpack",
 		"fontend-watch": "npx webpack --watch"
 	},
@@ -11,7 +8,9 @@
 		"@types/vscode": "^1.51.0",
 		"lodash-es": "^4.17.15",
 		"vue": "^2.6.12",
-		"vue-fragment": "^1.5.1"
+		"vue-class-component": "^7.2.6",
+		"vue-fragment": "^1.5.1",
+		"vue-property-decorator": "^9.0.2"
 	},
 	"devDependencies": {
 		"copyfiles": "^2.4.0",

@@ -21,38 +21,4 @@
     </div>
   </fast-accordion-item>
 </template>
-<script lang="ts">
-import Vue from "vue";
-import { callbacks } from "../index";
-import { FASTAccordionItem } from "@microsoft/fast-components";
-
-FASTAccordionItem;
-
-export default Vue.extend({
-  name: "unit-test-result",
-  props: {
-    item: Object,
-  },
-  data: () => {
-    return {
-      output: null,
-      expandedOnce: false,
-      testModel: null,
-    };
-  },
-  methods: {
-    loadTestResult() {
-      this.expandedOnce = true;
-
-      if (this.output) {
-        return;
-      }
-      this.testModel = callbacks.getTestModel(this.item.testId);
-      this.output = callbacks.getTestResultOutputModel(this.item.testId);
-    },
-    openTest() {
-      this.testModel = callbacks.navToTestMethod(this.item.testId);
-    },
-  },
-});
-</script>
+<script src="./UnitTestResult.ts"></script>
