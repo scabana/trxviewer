@@ -11,9 +11,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag trxviewer:$(date +%s)
+      run: docker build . --file Dockerfile --tag trxviewer:build
     - name: "Extract extension to disk"
-      run: mkdir /out && docker run --mount type=bind,source=/out,target=/extract trxviewer:$(date +%s)
+      run: mkdir ./out && docker run --mount type=bind,source=./out,target=/extract trxviewer:build
     - name: Upload vsix Build Artifact
       uses: actions/upload-artifact@v2.2.1
       with:
