@@ -1,0 +1,23 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+env:
+  version: $(date +%s)
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag trxviewer:$version
+    - name: "Extract extension to disk"
+      run: docker run --mount type=bind,source=/out,target=/extract trxviewer:$version
+    - name: Upload vsix Build Artifact
+      uses: actions/upload-artifact@v2.2.1
+      with:
+        path: /out/*.vsix
+    
