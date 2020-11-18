@@ -9,8 +9,15 @@
 		"vscode": "^1.46.0"
 	},
 	"categories": [
+		"Visualization",
+		"Other"
+	],
+	"keywords": [
 		"Testing",
-		"Visualization"
+		"trx",
+		"MsTest",
+		"VsTest",
+		"xUnit"
 	],
 	"activationEvents": [
 		"onCustomEditor:trxviewer"
