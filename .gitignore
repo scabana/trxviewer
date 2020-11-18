@@ -2,5 +2,4 @@
 **/obj
 **/node_modules/
 out/
-
-**/wwwroot/script/npm/
+**/wwwroot/scripts

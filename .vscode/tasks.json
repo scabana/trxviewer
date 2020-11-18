@@ -5,7 +5,7 @@
 	"tasks": [
 		{
 			"type": "npm",
-			"label": "npm:watch",
+			"label": "extension:watch",
 			"script": "watch",
 			"problemMatcher": "$tsc-watch",
 			"options": {
@@ -27,33 +27,53 @@
 			"group": "build"
 		},
 		{
-			"type": "process",
-			"label": "dotnet:watch",
+			"type": "shell",
+			"label": "debug:copyfiles",
 			"group": "build",
-			"command": "dotnet",
-			"isBackground": true,
-			"problemMatcher": {
-				"base": "$msCompile",
-				"background": {
-					"beginsPattern": "watch : Started",
-					"endsPattern": "watch : Waiting for a file to change before restarting dotnet..."
-				}
+			"presentation": {
+				"reveal": "never"
 			},
-			"args": [
-				"watch",
-				"-p",
-				"./src/TrxViewer.FrontEnd",
-				"publish",
-				"-o",
-				"../../out/media"
-			]
+			"windows": {
+				"command": "rm -r ./out/media; Copy-Item -Recurse ./src/frontend/wwwroot ./out/media"
+			},
+			"command": "rm -r ./out/media "
+		},
+		{
+			"type": "npm",
+			"label": "fontend:watch",
+			"script": "fontend-watch",
+			"problemMatcher": {
+				"owner": "webpack",
+				"severity": "error",
+				"fileLocation": "relative",
+				"pattern": [
+					{
+						"regexp": "ERROR in \\[at-loader\\] ([^:]*):(\\d+):(\\d+)",
+						"file": 1,
+						"line": 2,
+						"column": 3
+					},
+					{
+						"regexp": "TS(.*)",
+						"message": 1
+					}
+				]
+			},
+			"options": {
+				"cwd": "${workspaceFolder}/src/frontend"
+			},
+			"isBackground": true,
+			"presentation": {
+				"reveal": "never"
+			},
+			"group": "build"
 		},
 		{
 			"label": "watch",
 			"dependsOn": [
-				"npm:watch",
+				"extension:watch",
 				"npm:install:out",
-				"dotnet:watch"
+				"fontend:watch"
 			],
 			"group": {
 				"kind": "build",
