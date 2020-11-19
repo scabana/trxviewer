@@ -1,7 +1,8 @@
 {
 	"scripts": {
-		"webpack": "npx webpack",
-		"fontend-watch": "npx webpack --watch"
+		"webpack:dev": "webpack",
+		"webpack:prod": "webpack --mode=production",
+		"fontend-watch": "webpack --watch"
 	},
 	"dependencies": {
 		"@microsoft/fast-components": "^1.11.1",
