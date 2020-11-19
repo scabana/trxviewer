@@ -3,7 +3,7 @@
 	"displayName": "Trx viewer",
 	"description": "Allows visualizing TRX files.",
 	"version": "0.0.2",
-	"enableProposedApi": true,
+	"enableProposedApi": false,
 	"publisher": "scabana",
 	"engines": {
 		"vscode": "^1.46.0"
