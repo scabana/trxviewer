@@ -20,7 +20,7 @@ jobs:
           path: ./out/*.vsix
           if-no-files-found: error
       - name: Publish to vs marketplace
-        #if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master'
         env:
           PAT: ${{ secrets.PUBLISH_PAT }}
         run: |
@@ -29,4 +29,4 @@ jobs:
           npm ci
           echo PACKAGEPATH
           echo $PACKAGEPATH
-          npx vsce publish --packagePath $PACKAGEPATH
+          npx vsce publish --packagePath $PACKAGEPATH -p $PAT
