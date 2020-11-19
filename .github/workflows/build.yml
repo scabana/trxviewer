@@ -2,31 +2,31 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag trxviewer:build
-    - name: "Extract extension to disk"
-      run: mkdir $(pwd)/out && docker run --name build --mount type=bind,source=$(pwd)/out,target=/extract trxviewer:build && docker wait build
-    - name: Upload vsix Build Artifact
-      uses: actions/upload-artifact@v2.2.1
-      with:
-        path: ./out/*.vsix
-        if-no-files-found: error
-    - name: Publish to vs marketplace
-      #if: github.ref == 'refs/heads/master'
-      env:
-        PAT: ${{ secrets.PUBLISH_PAT }}
-      run: |
-        cd src/vsmarketplacepublish
-        PACKAGEPATH="$(find ../../out/*.vsix)"
-        npm ci
-        echo $PACKAGEPATH
-        npm run publish
-    
+      - uses: actions/checkout@v2
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag trxviewer:build
+      - name: "Extract extension to disk"
+        run: mkdir $(pwd)/out && docker run --name build --mount type=bind,source=$(pwd)/out,target=/extract trxviewer:build && docker wait build
+      - name: Upload vsix Build Artifact
+        uses: actions/upload-artifact@v2.2.1
+        with:
+          path: ./out/*.vsix
+          if-no-files-found: error
+      - name: Publish to vs marketplace
+        #if: github.ref == 'refs/heads/master'
+        env:
+          PAT: ${{ secrets.PUBLISH_PAT }}
+        run: |
+          cd src/vsmarketplacepublish
+          PACKAGEPATH="$(find ../../out/*.vsix)"
+          npm ci
+          echo PACKAGEPATH
+          echo $PACKAGEPATH
+          npx vsce publish --packagePath $PACKAGEPATH
