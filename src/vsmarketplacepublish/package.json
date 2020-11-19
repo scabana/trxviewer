@@ -2,9 +2,6 @@
   "name": "vsmarketplacepublish",
   "version": "1.0.0",
   "description": "Used to publish the extension to the marketplace.",
-  "scripts": {
-    "publish": "echo $PACKAGEPATH"
-  },
   "author": "scabana",
   "dependencies": {
     "vsce": "^1.81.1"
