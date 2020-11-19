@@ -47,8 +47,6 @@ module.exports = (env, argv) => {
 		config.mode = 'production';
 		config.devtool = 'hidden-source-map';
 	}
-	config.mode = 'production';
-	config.devtool = 'hidden-source-map';
 
 	return config;
 }
