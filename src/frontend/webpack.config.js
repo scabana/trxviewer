@@ -45,8 +45,10 @@ let config = {
 module.exports = (env, argv) => {
 	if (argv.mode === 'production') {
 		config.mode = 'production';
-		config.devtool = 'source-map';
+		config.devtool = 'hidden-source-map';
 	}
+	config.mode = 'production';
+	config.devtool = 'hidden-source-map';
 
 	return config;
 }

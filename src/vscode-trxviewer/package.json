@@ -40,7 +40,17 @@
 					}
 				]
 			}
-		]
+		],
+		"configuration": {
+			"title": "vscode-trxviewer",
+			"properties": {
+				"trxviewer.enableSourceMaps": {
+					"type": "boolean",
+					"default": false,
+					"description": "Allows seeing original source code when using Webview Developer Tools."
+				}
+			}
+		}
 	},
 	"scripts": {
 		"compile": "tsc -p ./",
