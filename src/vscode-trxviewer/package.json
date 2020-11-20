@@ -1,8 +1,8 @@
 {
 	"name": "trxviewer",
 	"displayName": "Trx viewer",
-	"description": "Allows visualizing TRX files.",
-	"version": "0.0.2",
+	"description": "Allows visualizing .trx files.",
+	"version": "0.0.3",
 	"enableProposedApi": false,
 	"publisher": "scabana",
 	"engines": {
@@ -28,6 +28,9 @@
 		"type": "git",
 		"url": "https://github.com/scabana/trxviewer.git"
 	},
+	"bugs": {
+		"url": "https://github.com/scabana/trxviewer/issues"
+	},
 	"main": "./vscode-trxviewer/extension.js",
 	"contributes": {
 		"customEditors": [
@@ -42,7 +45,7 @@
 			}
 		],
 		"configuration": {
-			"title": "vscode-trxviewer",
+			"title": "TrxViewer",
 			"properties": {
 				"trxviewer.enableSourceMaps": {
 					"type": "boolean",
@@ -56,8 +59,8 @@
 		"compile": "tsc -p ./",
 		"lint": "eslint . --ext .ts,.tsx",
 		"watch": "tsc -w -p ./",
-		"install:out": "copy \"package.json\" \"../../out/package.json\" && cd ../../out && npm install --only=production",
-		"linux:install:out": "cp package.json icon.ico package-lock.json ../../LICENSE ../../out/ && cd ../../out && npm ci",
+		"install:out": "copy \"package.json\" \"../../out/package.json\" && cd static && xcopy . ..\\..\\..\\out /Y/E/I && cd ../../../out && npm install --only=production",
+		"linux:install:out": "cp package.json package-lock.json ../../LICENSE ../../out/ && cd static && cp -r ./* ../../../out && cd ../../../out && npm ci",
 		"vsce": "vsce package"
 	},
 	"devDependencies": {
