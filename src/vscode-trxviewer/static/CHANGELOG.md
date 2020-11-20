@@ -1,3 +1,5 @@
+# 0.0.4
+- Fix packaging (image link generation in README.md)
 
 # 0.0.3
 - Information page added (README.md)
