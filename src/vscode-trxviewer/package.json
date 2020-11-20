@@ -61,7 +61,7 @@
 		"watch": "tsc -w -p ./",
 		"install:out": "copy \"package.json\" \"../../out/package.json\" && cd static && xcopy . ..\\..\\..\\out /Y/E/I && cd ../../../out && npm install --only=production",
 		"linux:install:out": "cp package.json package-lock.json ../../LICENSE ../../out/ && cd static && cp -r ./* ../../../out && cd ../../../out && npm ci",
-		"vsce": "vsce package"
+		"vsce": "vsce package --baseContentUrl https://github.com/scabana/trxviewer/raw/main/ --baseImagesUrl https://github.com/scabana/trxviewer/raw/main/"
 	},
 	"devDependencies": {
 		"@types/node": "^12.12.0",
