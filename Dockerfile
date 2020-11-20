@@ -12,7 +12,7 @@ RUN npm ci && \
 	npm run linux:install:out
 
 WORKDIR /app/out
-RUN npm run vsce
+RUN npm run vsce --baseContentUrl https://github.com/scabana/trxviewer/raw/main/ --baseImagesUrl https://github.com/scabana/trxviewer/raw/main/
 
 FROM node:12-alpine3.12
 
