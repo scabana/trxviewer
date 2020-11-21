@@ -12,7 +12,7 @@ Welcome to the home of the Txr viewer extension.
 - Possible to navigate to test method 
 - Partial theme support
 
-![Example](/raw/main/src/vscode-trxviewer/images/example.png)
+![Example](./src/vscode-trxviewer/images/example.png)
 
 ## How to debug
 As I haven't found a way to start debugging after two background watch tasks are ok:
