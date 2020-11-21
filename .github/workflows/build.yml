@@ -20,13 +20,24 @@ jobs:
           path: ./out/*.vsix
           if-no-files-found: error
       - name: Publish to vs marketplace
-        if: github.ref == 'refs/heads/main'
+        #if: github.ref == 'refs/heads/main'
         env:
           PAT: ${{ secrets.PUBLISH_PAT }}
         run: |
-          cd src/vsmarketplacepublish
-          PACKAGEPATH="$(find ../../out/*.vsix)"
-          npm ci
-          echo PACKAGEPATH
-          echo $PACKAGEPATH
-          npx vsce publish --packagePath $PACKAGEPATH -p $PAT
+          PublishedExtensionInfo=$(npx vsce show --json scabana.trxviewer)
+
+          # knowing we got node, let's extract values using some plain old js!
+
+          PublishedVersion=$(node -e "console.log(JSON.parse(process.argv[1]).versions[0].version)" "$PublishedExtensionInfo")
+          CurrentCIVersion=$(node -e "console.log(JSON.parse(process.argv[1]).version)" "$(cat ../../out/package.json)")
+
+          if [ $PublishedVersion == $CurrentCIVersion ]; then
+            echo "Version not updated, not need to publish!"
+          fi
+
+          #cd src/vsmarketplacepublish
+          #PACKAGEPATH="$(find ../../out/*.vsix)"
+          #npm ci
+          #echo PACKAGEPATH
+          #echo $PACKAGEPATH
+          #npx vsce publish --packagePath $PACKAGEPATH -p $PAT
