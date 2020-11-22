@@ -31,6 +31,7 @@ window.app = app;
 
 export let callbacks: Callbacks = {
 	canShowTest: () => false,
+	raiseTestMethodExists: testId => { },
 	showFilePicker: () => true,
 	navToTestMethod: () => { },
 	getTestModel: testId => {

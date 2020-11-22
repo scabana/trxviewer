@@ -67,6 +67,10 @@ callbacks.navToTestMethod = testId => {
 	let test = callbacks.getTestModel(testId);
 	vscode.postMessage({ type: "navToTest", symbolName: `${test.testMethodClassName}.${test.testMethodName}` });
 };
+callbacks.raiseTestMethodExists = testId => {
+	let test = callbacks.getTestModel(testId);
+	vscode.postMessage({ type: "testMethodExists", testId: testId, symbolName: `${test.testMethodClassName}.${test.testMethodName}` });
+};
 
 let state = vscode.getState();
 if (state) {

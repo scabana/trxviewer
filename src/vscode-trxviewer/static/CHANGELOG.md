@@ -1,3 +1,6 @@
+# 0.0.5
+- Method name is not a link when method symbol has not been found. Once found, the method name becomes a link.
+
 # 0.0.4
 - Fix packaging (image link generation in README.md)
 

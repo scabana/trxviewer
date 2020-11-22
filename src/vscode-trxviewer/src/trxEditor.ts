@@ -50,10 +50,44 @@ export class TrxEditorProvider implements vscode.CustomTextEditorProvider {
 						}
 					);
 					return;
+				case 'testMethodExists':
+					this.raiseFindTestMethod(e.testId, e.symbolName, webviewPanel.webview, 0);
+					return;
 			}
 		});
 
 		updateWebview();
+	}
+
+	/*
+		This retry logic is to account for a freshly loaded vscode instance where 
+		omnisharp hasn't loaded the symbols yet.
+	*/
+	private raiseFindTestMethod(testId: string, symbolName: string, webView: vscode.Webview, tryIndex: number) {
+		vscode.commands.executeCommand("vscode.executeWorkspaceSymbolProvider", symbolName).then(
+			s => {
+				const symbols: vscode.SymbolInformation[] = s as vscode.SymbolInformation[];
+				const filteredSymbols = symbols.filter(i => i.kind == vscode.SymbolKind.Method);
+
+				if (filteredSymbols.length > 0) {
+					webView.postMessage({
+						type: 'testMethodFound',
+						testId: testId,
+					});
+				}
+				else {
+
+					if (tryIndex === 25) {
+						//At some point, we won't find it, no real reason to keep looking.
+						return;
+					}
+
+					const nextTryIndex = tryIndex + 1;
+
+					setTimeout(() => { this.raiseFindTestMethod(testId, symbolName, webView, nextTryIndex); }, nextTryIndex * 100);
+				}
+			}
+		);
 	}
 
 	/**

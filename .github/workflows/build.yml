@@ -36,6 +36,8 @@ jobs:
             exit 0
           fi
 
+          echo "Publishing extension!"
+
           cd src/vsmarketplacepublish
           PACKAGEPATH="$(find ../../out/*.vsix)"
           npm ci
