@@ -59,6 +59,10 @@ export class TrxEditorProvider implements vscode.CustomTextEditorProvider {
 		updateWebview();
 	}
 
+	/*
+		This retry logic is to account for a freshly loaded vscode instance where 
+		omnisharp hasn't loaded the symbols yet.
+	*/
 	private raiseFindTestMethod(testId: string, symbolName: string, webView: vscode.Webview, tryIndex: number) {
 		vscode.commands.executeCommand("vscode.executeWorkspaceSymbolProvider", symbolName).then(
 			s => {
