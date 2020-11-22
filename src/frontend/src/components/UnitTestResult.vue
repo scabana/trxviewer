@@ -8,7 +8,7 @@
       </div>
       <div>
         <span>Method name:</span>
-        <a @click="openTest" href="#">{{ testModel.testMethodName }}</a>
+        <nav-to-test-link :testId="item.testId" :testMethodName="testModel.testMethodName"></nav-to-test-link>
       </div>
       <div v-if="output && output.errorInfo && output.errorInfo.message">
         <div>Message:</div>
