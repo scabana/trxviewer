@@ -11,9 +11,9 @@ export default class FilteredResults extends Vue {
   public name = "filtered-results";
 
   @Prop() readonly items!: any[]
-  @Prop() readonly filter!: Function
+  @Prop() readonly filter!: (item: any) => boolean
 
   get filteredItems() {
-    return [...this.items].filter(this.filter as (value: any) => Boolean);
+    return [...this.items].filter(this.filter as (value: any) => boolean);
   }
 }

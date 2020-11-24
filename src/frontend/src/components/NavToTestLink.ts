@@ -14,7 +14,7 @@ FASTTooltip;
 export default class NavToTestLink extends Vue {
   public name = "nav-to-test-link";
 
-  private testNotFound: boolean = true;
+  private testNotFound = true;
 
   @Prop() readonly testId!: string
   @Prop() readonly testMethodName!: number

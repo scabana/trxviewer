@@ -21,14 +21,14 @@ export default class PartialList extends Vue {
 	@Prop() readonly testRun!: TestRun
 
 	get groupedResults() {
-		var groupBy = function (xs: any, key: string) {
+		const groupBy = function (xs: any, key: string) {
 			return xs.reduce(function (rv: any[], x: any) {
 				(rv[x[key]] = rv[x[key]] || []).push(x);
 				return rv;
 			}, {});
 		};
 
-		let results = [...this.testRun.results];
+		const results = [...this.testRun.results];
 
 		results.sort((left, right) => {
 			if (left.outcome == right.outcome) {

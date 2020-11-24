@@ -2,7 +2,8 @@
 	"scripts": {
 		"webpack:dev": "webpack",
 		"webpack:prod": "webpack --mode=production",
-		"fontend-watch": "webpack --watch"
+		"fontend-watch": "webpack --watch",
+		"lint": "eslint . --ext .ts,.tsx"
 	},
 	"dependencies": {
 		"@microsoft/fast-components": "^1.11.1",
@@ -14,8 +15,11 @@
 		"vue-property-decorator": "^9.0.2"
 	},
 	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "^3.0.2",
+		"@typescript-eslint/parser": "^3.0.2",
 		"copyfiles": "^2.4.0",
 		"css-loader": "^5.0.1",
+		"eslint": "^7.1.0",
 		"mkdirp": "^1.0.4",
 		"ts-loader": "^8.0.11",
 		"typescript": "^4.0.5",

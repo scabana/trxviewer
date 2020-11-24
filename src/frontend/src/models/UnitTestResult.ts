@@ -1,6 +1,7 @@
-
-export default interface UnitTestResult {
+interface UnitTestResult {
 	testName: string
 	outcome: string
 	testId: string
 }
+
+export default UnitTestResult;

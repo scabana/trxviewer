@@ -1,5 +1,5 @@
 import TestModel from './TestModel';
-import { TestResultOutputModel } from './TestResultOutputModel';
+import TestResultOutputModel from './TestResultOutputModel';
 
 export interface Callbacks {
 	canShowTest: () => boolean;

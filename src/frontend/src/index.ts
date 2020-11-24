@@ -1,11 +1,11 @@
 import { FASTDesignSystemProvider } from '@microsoft/fast-components';
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from 'vue';
+import App from './App.vue';
 import TestRun from './models/TestRun';
 import { parseDocumentToTestRun, parseStringXml } from './utils/trx';
 import { Callbacks } from './models/Callbacks';
 
-let app: Vue = new Vue({
+const app: Vue = new Vue({
 	el: "#app",
 	render: r => r(App),
 	data: {
@@ -29,23 +29,23 @@ declare global {
 
 window.app = app;
 
-export let callbacks: Callbacks = {
+export const callbacks: Callbacks = {
 	canShowTest: () => false,
-	raiseTestMethodExists: testId => { },
+	raiseTestMethodExists: testId => console.log(`raiseTestMethodExists(${testId})`),
 	showFilePicker: () => true,
-	navToTestMethod: () => { },
+	navToTestMethod: () => console.log("navToTestMethod"),
 	getTestModel: testId => {
-		let test = testRunDocument?.querySelector(`TestDefinitions>UnitTest[id="${testId}"]`);
-		let testMethod = test?.querySelector("TestMethod");
+		const test = testRunDocument?.querySelector(`TestDefinitions>UnitTest[id="${testId}"]`);
+		const testMethod = test?.querySelector("TestMethod");
 
 		return {
 			name: test?.getAttribute("name") || "",
 			testMethodClassName: testMethod?.getAttribute("className") || "",
 			testMethodName: testMethod?.getAttribute("name") || "",
-		}
+		};
 	},
 	getTestResultOutputModel: testId => {
-		let errorInfo = testRunDocument?.querySelector(`Results>UnitTestResult[testId="${testId}"] > Output > ErrorInfo`);
+		const errorInfo = testRunDocument?.querySelector(`Results>UnitTestResult[testId="${testId}"] > Output > ErrorInfo`);
 
 		if (errorInfo == null) {
 			return null;

@@ -15,17 +15,17 @@ declare global {
 
 }
 
-let vscode = window.acquireVsCodeApi();
+const vscode = window.acquireVsCodeApi();
 
 window.document.addEventListener("readystatechange", () => {
-	let observer = new MutationObserver(() => {
+	const observer = new MutationObserver(() => {
 
-		var backgroundValue = normalizeColor(document.documentElement.style.getPropertyValue("--vscode-editorPane-background"));
-		var accentColor = normalizeColor(document.documentElement.style.getPropertyValue("--vscode-focusBorder"));
+		const backgroundValue = normalizeColor(document.documentElement.style.getPropertyValue("--vscode-editorPane-background"));
+		const accentColor = normalizeColor(document.documentElement.style.getPropertyValue("--vscode-focusBorder"));
 
-		for (let item of Array.from(document.getElementsByTagName("fast-design-system-provider"))) {
+		for (const item of Array.from(document.getElementsByTagName("fast-design-system-provider"))) {
 
-			let typedItem: FASTDesignSystemProvider = item as FASTDesignSystemProvider;
+			const typedItem: FASTDesignSystemProvider = item as FASTDesignSystemProvider;
 
 			if (typedItem.accentBaseColor != accentColor) {
 				typedItem.accentBaseColor = accentColor;
@@ -44,7 +44,7 @@ window.document.addEventListener("readystatechange", () => {
 
 	observer.observe(document.documentElement, { attributes: true, attributeFilter: ['style'] });
 
-	for (let item of Array.from(document.getElementsByTagName("fast-design-system-provider"))) {
+	for (const item of Array.from(document.getElementsByTagName("fast-design-system-provider"))) {
 		(item as FASTDesignSystemProvider).backgroundColor = document.documentElement.style.getPropertyValue("--vscode-editorPane-background");
 	}
 });
@@ -64,15 +64,15 @@ window.addEventListener('message', event => {
 callbacks.showFilePicker = () => false;
 callbacks.canShowTest = () => true;
 callbacks.navToTestMethod = testId => {
-	let test = callbacks.getTestModel(testId);
+	const test = callbacks.getTestModel(testId);
 	vscode.postMessage({ type: "navToTest", symbolName: `${test.testMethodClassName}.${test.testMethodName}` });
 };
 callbacks.raiseTestMethodExists = testId => {
-	let test = callbacks.getTestModel(testId);
+	const test = callbacks.getTestModel(testId);
 	vscode.postMessage({ type: "testMethodExists", testId: testId, symbolName: `${test.testMethodClassName}.${test.testMethodName}` });
 };
 
-let state = vscode.getState();
+const state = vscode.getState();
 if (state) {
 	updateTestRun(state);
 }
