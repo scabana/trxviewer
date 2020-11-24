@@ -20,7 +20,7 @@ export default class PartialList extends Vue {
   @Prop() readonly items!: any[]
 
   get filteredItems() {
-    let items = [...this.items];
+    const items = [...this.items];
     return items.slice(0, this.renderedCount);
   }
 

@@ -37,5 +37,16 @@ To debug the frontend of the extension:
 6. Find `webpack://`
 7. Enjoy your breakpoints
 
+## Local build
+If you just want to build the extension and install it locally from source: 
+1. Clone the repo!
+2. Open your shell of choice
+3. Run: `docker build -t trxviewer:local . && docker run --mount type=bind,source=/d/temp,target=/extract trxviewer:local` 
+   <br>
+   But replace `/d/temp` when the folder of your choice
+4. code --install-extension d:\temp\trxviewer-0.0.5.vsix
+   <br>
+   But replace `d:\temp` with the same folder of your choice, you may also need to find the right vsix filename if the version is wrong.
+
 ## Contributing 
 Altough no contributing guide is available yet, if you wish to help, please open a bug to discuss changes then open a PR with agreed solution!

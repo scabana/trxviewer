@@ -27,7 +27,7 @@ export default class UnitTestResultGroup extends Vue {
   @Prop() readonly items!: UnitTestResult[]
 
   get filterCallback() {
-    let filter = this.filter;
+    const filter = this.filter;
 
     return (input: UnitTestResultModel) => input.testName.toLowerCase().indexOf(filter) >= 0;
   }

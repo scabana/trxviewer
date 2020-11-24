@@ -1,9 +1,9 @@
 import Vue from "vue";
-import UnitTestResultModel from "../models/UnitTestResult"
+import UnitTestResultModel from "../models/UnitTestResult";
 import { callbacks } from "../index";
 import { FASTAccordionItem } from "@microsoft/fast-components";
 import { Component, Prop } from "vue-property-decorator";
-import { TestResultOutputModel } from "../models/TestResultOutputModel";
+import TestResultOutputModel from "../models/TestResultOutputModel";
 import TestModel from "../models/TestModel";
 import NavToTestLink from "./NavToTestLink.vue";
 

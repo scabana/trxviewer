@@ -2,16 +2,16 @@ import TestRun from "../models/TestRun";
 
 export function parseDocumentToTestRun(xmlDocument: Document) {
 
-	let summary = xmlDocument.documentElement.querySelector("ResultSummary");
+	const summary = xmlDocument.documentElement.querySelector("ResultSummary");
 
-	let jsonObject: TestRun = {
+	const jsonObject: TestRun = {
 		resultSummary: {
 			outcome: summary?.getAttribute("outcome") || ""
 		},
 		results: []
 	};
 
-	for (let item of Array.from(xmlDocument.documentElement.querySelectorAll("Results>UnitTestResult"))) {
+	for (const item of Array.from(xmlDocument.documentElement.querySelectorAll("Results>UnitTestResult"))) {
 		jsonObject.results.push({
 			testName: item.getAttribute("testName") || "",
 			outcome: item.getAttribute("outcome") || "",
@@ -23,6 +23,6 @@ export function parseDocumentToTestRun(xmlDocument: Document) {
 }
 
 export function parseStringXml(string: string) {
-	let parser = new DOMParser();
+	const parser = new DOMParser();
 	return parser.parseFromString(string, "application/xml");
 }
