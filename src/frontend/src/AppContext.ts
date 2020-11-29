@@ -1,5 +1,5 @@
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from 'vue';
+import App from './App.vue';
 import Callbacks from './models/Callbacks';
 import TestRunState from './models/state/TestRunState';
 import Theme from './models/Theme';
@@ -24,12 +24,12 @@ declare module 'vue/types/vue' {
 let app: Vue | null = null;
 let callbacks: Callbacks | null = null;
 let testRunDocument: Document | null = null;
-let state: TestRunState = {
+const state: TestRunState = {
 	resultGroups: {
 
 	},
 	filter: ""
-}
+};
 
 export function createApp(cb: Callbacks) {
 	callbacks = cb;
@@ -47,17 +47,18 @@ export function createApp(cb: Callbacks) {
 }
 
 export function getTestModel(testId: string) {
-	let test = testRunDocument?.querySelector(`TestDefinitions>UnitTest[id="${testId}"]`);
-	let testMethod = test?.querySelector("TestMethod");
+	const test = testRunDocument?.querySelector(`TestDefinitions>UnitTest[id="${testId}"]`);
+	const testMethod = test?.querySelector("TestMethod");
 
 	return {
 		name: test?.getAttribute("name") || "",
 		testMethodClassName: testMethod?.getAttribute("className") || "",
 		testMethodName: testMethod?.getAttribute("name") || ""
-	}
-};
+	};
+}
+
 export function getTestResultOutputModel(testId: string) {
-	let errorInfo = testRunDocument?.querySelector(`Results>UnitTestResult[testId="${testId}"] > Output > ErrorInfo`);
+	const errorInfo = testRunDocument?.querySelector(`Results>UnitTestResult[testId="${testId}"] > Output > ErrorInfo`);
 
 	if (errorInfo == null) {
 		return null;

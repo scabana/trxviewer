@@ -1,4 +1,4 @@
-export let getStyle = (outcome: string) => {
+export function getStyle(outcome: string) {
 	if (outcome == "Passed") {
 		return { color: "var(--green, green)" };
 	}
@@ -14,8 +14,8 @@ export function normalizeColor(color: string | any) {
 
 	if (color.startsWith("rgba")) {
 
-		let content = (/rgba\((?<content>.+)\)/.exec(color) as any).groups.content;
-		let newContent = content.split(",").splice(0, 3).join(",");
+		const content = (/rgba\((?<content>.+)\)/.exec(color) as any).groups.content;
+		const newContent = content.split(",").splice(0, 3).join(",");
 
 		return `rgb(${newContent})`;
 	}

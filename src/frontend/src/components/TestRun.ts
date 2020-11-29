@@ -25,7 +25,7 @@ export default class PartialList extends Vue {
 
 	get groupedResults() {
 
-		let results = [...this.testRun.results];
+		const results = [...this.testRun.results];
 
 		results.sort((left, right) => {
 			if (left.outcome == right.outcome) {

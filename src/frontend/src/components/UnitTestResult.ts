@@ -1,8 +1,8 @@
 import Vue from "vue";
-import UnitTestResultModel from "../models/trx/UnitTestResult"
+import UnitTestResultModel from "../models/trx/UnitTestResult";
 import { FASTAccordionItem } from "@microsoft/fast-components";
 import { Component, Prop } from "vue-property-decorator";
-import { TestResultOutputModel } from "../models/state/TestResultOutputModel";
+import TestResultOutputModel from "../models/state/TestResultOutputModel";
 import TestModel from "../models/trx/TestModel";
 import NavToTestLink from "./NavToTestLink.vue";
 import UnitTestResultState from "../models/state/UnitTestResultState";

@@ -30,7 +30,7 @@ export default class UnitTestResultGroup extends Vue {
   @Prop() readonly itemStates!: GroupState<UnitTestResultState>
 
   get filterCallback() {
-    let filter = this.filter;
+    const filter = this.filter;
 
     return (input: UnitTestResultModel) => input.testName.toLowerCase().indexOf(filter) >= 0;
   }

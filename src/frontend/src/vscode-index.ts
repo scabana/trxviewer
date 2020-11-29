@@ -15,15 +15,17 @@ createApp({
 	},
 });
 
-let state = vscode.getState();
+const state = vscode.getState();
 if (state) {
 	updateTestRunState(state.state);
 }
 
+
+// eslint-disable-next-line @typescript-eslint/no-empty-function
 let watcherCancel: () => void = function () { };
 
 async function registerToStateChanges() {
-	let app = getApp();
+	const app = getApp();
 	await app.$nextTick();
 
 	watcherCancel = app.$watch("testRunState", function (newValue, oldValue) {
@@ -36,10 +38,10 @@ async function registerToStateChanges() {
 }
 
 window.document.addEventListener("readystatechange", () => {
-	let observer = new MutationObserver(() => {
+	const observer = new MutationObserver(() => {
 
-		var backgroundColor = normalizeColor(document.documentElement.style.getPropertyValue("--vscode-editorPane-background"));
-		var accentColor = normalizeColor(document.documentElement.style.getPropertyValue("--vscode-focusBorder"));
+		const backgroundColor = normalizeColor(document.documentElement.style.getPropertyValue("--vscode-editorPane-background"));
+		const accentColor = normalizeColor(document.documentElement.style.getPropertyValue("--vscode-focusBorder"));
 
 		const app = getApp();
 		app.theme = {
@@ -49,10 +51,6 @@ window.document.addEventListener("readystatechange", () => {
 	});
 
 	observer.observe(document.documentElement, { attributes: true, attributeFilter: ['style'] });
-
-	// for (let item of Array.from(document.getElementsByTagName("fast-design-system-provider"))) {
-	// 	(item as FASTDesignSystemProvider).backgroundColor = document.documentElement.style.getPropertyValue("--vscode-editorPane-background");
-	// }
 });
 
 window.addEventListener('message', event => {

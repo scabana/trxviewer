@@ -1,6 +1,8 @@
 import ResultGroups from "./ResultGroups";
 
-export default interface TestRunState {
+interface TestRunState {
 	filter: string;
 	resultGroups: ResultGroups;
 }
+
+export default TestRunState;
