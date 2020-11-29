@@ -1,6 +1,8 @@
 import ExpandedState from "./ExpandedState";
 
-export default interface UnitTestResultState {
+interface UnitTestResultState {
 	testId: string;
 	expanded: ExpandedState;
 }
+
+export default UnitTestResultState;

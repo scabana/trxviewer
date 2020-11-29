@@ -1,7 +1,9 @@
 import ExpandedState from "./ExpandedState";
 import ItemStates from "./ItemStates";
 
-export default interface GroupState<TItem> {
+interface GroupState<TItem> {
 	expanded: ExpandedState;
 	itemStates: ItemStates<TItem>;
 }
+
+export default GroupState;

@@ -1,4 +1,7 @@
 
-export default interface ItemStates<TItem> {
+
+interface ItemStates<TItem> {
 	[itemId: string]: TItem;
 }
+
+export default ItemStates;

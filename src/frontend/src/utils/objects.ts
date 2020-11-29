@@ -1,9 +1,9 @@
 export const groupBy = <TItem>(xs: TItem[], key: (item: TItem) => string) => {
 
-	let result: { [state: string]: TItem[] } = {};
+	const result: { [state: string]: TItem[] } = {};
 
 	return xs.reduce(function (rv: { [state: string]: TItem[] }, x: TItem) {
-		let group = rv[key(x)] = rv[key(x)] || [];
+		const group = rv[key(x)] = rv[key(x)] || [];
 
 		group.push(x);
 

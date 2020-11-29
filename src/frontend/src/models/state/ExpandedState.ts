@@ -1,4 +1,6 @@
 
-export default interface ExpandedState {
+interface ExpandedState {
 	isExpanded: boolean;
 }
+
+export default ExpandedState;
