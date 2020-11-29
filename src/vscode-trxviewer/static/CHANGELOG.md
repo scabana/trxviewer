@@ -1,3 +1,11 @@
+# 0.0.6
+- Display states is now restored
+  -  Filter
+  -  Group expansion
+  -  Test expansion
+- Fixed a timing bug when large trx files were loaded and nothing would be displayed
+- Filtering moved to on input intead of on change
+
 # 0.0.5
 - Method name is not a link when method symbol has not been found. Once found, the method name becomes a link.
 

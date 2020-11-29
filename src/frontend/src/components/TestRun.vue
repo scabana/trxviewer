@@ -6,9 +6,9 @@
       </h3>
     </div>
     <div>
-      <fast-text-field @change="applyFilter" placeholder="Filter" style="display: block"> </fast-text-field>
+      <fast-text-field :value="testRunState.filter" v-on:input="testRunState.filter = $event.target.value" placeholder="Filter" style="display: block"> </fast-text-field>
       <fast-accordion>
-        <unit-test-result-group v-for="(val, key) in groupedResults" :key="key" :result="key" :items="val" :filter="filter"></unit-test-result-group>
+        <unit-test-result-group v-for="(val, key) in groupedResults" :key="key" :result="key" :items="val" :filter="testRunState.filter" :itemStates="getGroupState(key)"></unit-test-result-group>
       </fast-accordion>
     </div>
   </div>

@@ -1,5 +1,4 @@
 import Vue from "vue";
-import { callbacks } from "../index";
 import { Fragment } from "vue-fragment";
 import { Component, Prop } from "vue-property-decorator";
 import { FASTTooltip } from "@microsoft/fast-components";
@@ -20,7 +19,7 @@ export default class NavToTestLink extends Vue {
   @Prop() readonly testMethodName!: number
 
   private openTest() {
-    callbacks.navToTestMethod(this.testId);
+    this.$root.navToTestMethod(this.testId);
   }
 
   private onWindowMessage(event: any) {
@@ -34,7 +33,7 @@ export default class NavToTestLink extends Vue {
 
   public created() {
     window.addEventListener("message", this.onWindowMessage);
-    callbacks.raiseTestMethodExists(this.testId);
+    this.$root.raiseTestMethodExists(this.testId);
   }
 
   public destroyed() {

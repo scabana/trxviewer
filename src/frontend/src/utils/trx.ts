@@ -1,4 +1,4 @@
-import TestRun from "../models/TestRun";
+import TestRun from "../models/trx/TestRun";
 
 export function parseDocumentToTestRun(xmlDocument: Document) {
 

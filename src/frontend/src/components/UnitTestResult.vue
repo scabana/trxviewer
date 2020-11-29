@@ -1,5 +1,5 @@
 <template>
-  <fast-accordion-item @change="loadTestResult">
+  <fast-accordion-item @change="onAccordionItemChanged" ref="accordionItem" :expanded="itemState.expanded.isExpanded">
     <span slot="heading">{{ item.testName }}</span>
     <div v-if="expandedOnce">
       <div>
