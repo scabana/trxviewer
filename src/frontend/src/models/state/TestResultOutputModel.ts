@@ -1,4 +1,4 @@
-import ErrorInfo from "./ErrorInfo";
+import ErrorInfo from "../ErrorInfo";
 
 interface TestResultOutputModel {
 	errorInfo: ErrorInfo
