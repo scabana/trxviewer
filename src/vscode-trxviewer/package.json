@@ -20,8 +20,7 @@
 		"xUnit"
 	],
 	"activationEvents": [
-		"onCustomEditor:trxviewer",
-		"onWebviewPanel:trxviewer"
+		"onCustomEditor:trxviewer"
 	],
 	"icon": "icon.ico",
 	"license": "../LICENSE",

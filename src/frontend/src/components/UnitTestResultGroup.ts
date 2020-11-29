@@ -36,17 +36,17 @@ export default class UnitTestResultGroup extends Vue {
   }
 
   get expanded() {
-    return this.itemStates.expanded!.isExpanded;
+    return this.itemStates.expanded.isExpanded;
   }
 
   private getItemState(item: UnitTestResultModel): UnitTestResultState {
-    return this.itemStates.itemStates![item.testId];
+    return this.itemStates.itemStates[item.testId];
   }
 
   private onAccordionItemChanged() {
     const accordionItem = this.$refs.accordionItem as FASTAccordionItem;
 
-    this.itemStates.expanded!.isExpanded = accordionItem.expanded;
+    this.itemStates.expanded.isExpanded = accordionItem.expanded;
   }
 
   private getStyle = getStyle

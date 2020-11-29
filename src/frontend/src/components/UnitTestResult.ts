@@ -26,7 +26,7 @@ export default class UnitTestResult extends Vue {
   @Prop() readonly itemState!: UnitTestResultState
 
   public created() {
-    if (this.itemState.expanded!.isExpanded === true) {
+    if (this.itemState.expanded.isExpanded === true) {
       this.loadTestResult();
     }
   }
@@ -34,7 +34,7 @@ export default class UnitTestResult extends Vue {
   private onAccordionItemChanged() {
     const accordionItem = this.$refs.accordionItem as FASTAccordionItem;
 
-    this.itemState.expanded!.isExpanded = accordionItem.expanded;
+    this.itemState.expanded.isExpanded = accordionItem.expanded;
 
     this.loadTestResult();
   }
