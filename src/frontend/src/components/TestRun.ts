@@ -3,7 +3,11 @@ import { FASTAccordion, FASTTextField } from "@microsoft/fast-components";
 import UnitTestResultGroup from "./UnitTestResultGroup.vue";
 import { getStyle } from "../utils/styles";
 import { Component, Prop } from "vue-property-decorator";
-import TestRun from "../models/TestRun";
+import TestRun from "../models/trx/TestRun";
+import TestRunState from "../models/state/TestRunState";
+import GroupState from "../models/state/GroupState";
+import UnitTestResultState from "../models/state/UnitTestResultState";
+import { groupBy } from "../utils/objects";
 
 FASTAccordion;
 FASTTextField;
@@ -16,17 +20,10 @@ FASTTextField;
 export default class PartialList extends Vue {
 	public name = "test-run";
 
-	private filter = "";
-
 	@Prop() readonly testRun!: TestRun
+	@Prop() readonly testRunState!: TestRunState
 
 	get groupedResults() {
-		const groupBy = function (xs: any, key: string) {
-			return xs.reduce(function (rv: any[], x: any) {
-				(rv[x[key]] = rv[x[key]] || []).push(x);
-				return rv;
-			}, {});
-		};
 
 		const results = [...this.testRun.results];
 
@@ -43,11 +40,37 @@ export default class PartialList extends Vue {
 			return left.outcome.localeCompare(right.outcome);
 		});
 
-		return groupBy(results, "outcome");
+		return groupBy(results, item => item.outcome);
 	}
 
-	applyFilter(e: Event) {
-		this.filter = (e.target as HTMLInputElement).value;
+	private getGroupState(state: string): GroupState<UnitTestResultState> {
+
+		let groupState = this.testRunState.resultGroups[state];
+
+		if (!groupState) {
+			groupState = {
+				expanded: {
+					isExpanded: state == "Failed"
+				},
+				itemStates: {}
+			};
+
+			this.testRun.results.forEach(element => {
+				if (element.outcome == state) {
+					groupState.itemStates[element.testId] = {
+						testId: element.testId,
+						expanded: {
+							isExpanded: false
+						}
+					};
+				}
+			});
+
+			this.$set(this.testRunState.resultGroups, state, groupState);
+		}
+
+		return groupState;
+
 	}
 
 	private getStyle = getStyle

@@ -7,6 +7,7 @@ export class TrxEditorProvider implements vscode.CustomTextEditorProvider {
 	public static register(context: vscode.ExtensionContext): vscode.Disposable {
 		const provider = new TrxEditorProvider(context);
 		const providerRegistration = vscode.window.registerCustomEditorProvider(TrxEditorProvider.viewType, provider);
+
 		return providerRegistration;
 	}
 
@@ -29,15 +30,14 @@ export class TrxEditorProvider implements vscode.CustomTextEditorProvider {
 		};
 		webviewPanel.webview.html = await this.getHtmlForWebview(webviewPanel.webview);
 
-		const updateWebview = () => {
-			webviewPanel.webview.postMessage({
-				type: 'update',
-				content: document.getText(),
-			});
-		};
-
 		webviewPanel.webview.onDidReceiveMessage((e: any) => {
 			switch (e.type) {
+				case 'readyForData':
+					webviewPanel.webview.postMessage({
+						type: 'update',
+						content: document.getText(),
+					});
+					return;
 				case 'navToTest':
 					vscode.commands.executeCommand("vscode.executeWorkspaceSymbolProvider", e.symbolName).then(
 						s => {
@@ -53,10 +53,10 @@ export class TrxEditorProvider implements vscode.CustomTextEditorProvider {
 				case 'testMethodExists':
 					this.raiseFindTestMethod(e.testId, e.symbolName, webviewPanel.webview, 0);
 					return;
+				case 'stateUpdated':
+					vscode.commands.executeCommand("workbench.action.keepEditor");
 			}
 		});
-
-		updateWebview();
 	}
 
 	/*

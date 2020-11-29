@@ -1,12 +1,14 @@
 
 import Vue from "vue";
 import UnitTestResult from "./UnitTestResult.vue";
-import UnitTestResultModel from "../models/UnitTestResult";
+import UnitTestResultModel from "../models/trx/UnitTestResult";
 import FilteredResults from "./FilteredResults.vue";
 import PartialList from "./PartialList.vue";
 import { getStyle } from "../utils/styles";
 import { FASTButton, FASTAccordion, FASTAccordionItem } from "@microsoft/fast-components";
 import { Component, Prop } from "vue-property-decorator";
+import GroupState from "../models/state/GroupState";
+import UnitTestResultState from "../models/state/UnitTestResultState";
 
 FASTButton;
 FASTAccordion;
@@ -24,7 +26,8 @@ export default class UnitTestResultGroup extends Vue {
 
   @Prop() readonly result!: string
   @Prop() readonly filter!: string
-  @Prop() readonly items!: UnitTestResult[]
+  @Prop() readonly items!: UnitTestResultModel[]
+  @Prop() readonly itemStates!: GroupState<UnitTestResultState>
 
   get filterCallback() {
     const filter = this.filter;
@@ -33,7 +36,17 @@ export default class UnitTestResultGroup extends Vue {
   }
 
   get expanded() {
-    return this.result === "Failed" ? "expanded" : undefined;
+    return this.itemStates.expanded.isExpanded;
+  }
+
+  private getItemState(item: UnitTestResultModel): UnitTestResultState {
+    return this.itemStates.itemStates[item.testId];
+  }
+
+  private onAccordionItemChanged() {
+    const accordionItem = this.$refs.accordionItem as FASTAccordionItem;
+
+    this.itemStates.expanded.isExpanded = accordionItem.expanded;
   }
 
   private getStyle = getStyle
