@@ -17,6 +17,21 @@
 				"${workspaceFolder}/out/**/*.*",
 			],
 			"preLaunchTask": "debug:copyfiles"
+		},
+		{
+			"name": "Debug Jest Tests",
+			"type": "node",
+			"request": "launch",
+			"cwd": "${workspaceFolder}/src/frontend",
+			"runtimeArgs": [
+				"--inspect-brk",
+				"./node_modules/jest/bin/jest",
+				"--runInBand",
+				"--coverage",
+				"false"
+			],
+			"console": "integratedTerminal",
+			"internalConsoleOptions": "neverOpen"
 		}
 	]
 }

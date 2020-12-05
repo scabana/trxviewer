@@ -3,7 +3,8 @@
 		"webpack:dev": "webpack",
 		"webpack:prod": "webpack --mode=production",
 		"fontend-watch": "webpack --watch",
-		"lint": "eslint . --ext .ts,.tsx"
+		"lint": "eslint . --ext .ts,.tsx",
+		"test:unit": "jest"
 	},
 	"dependencies": {
 		"@microsoft/fast-components": "^1.12.0",
@@ -15,18 +16,53 @@
 		"vue-property-decorator": "^9.1.2"
 	},
 	"devDependencies": {
+		"@babel/core": "^7.12.9",
+		"@babel/plugin-proposal-export-default-from": "^7.12.1",
+		"@babel/plugin-proposal-export-namespace-from": "^7.12.1",
+		"@babel/plugin-transform-modules-commonjs": "^7.12.1",
+		"@babel/preset-env": "^7.12.7",
 		"@typescript-eslint/eslint-plugin": "^4.8.2",
 		"@typescript-eslint/parser": "^4.8.2",
+		"@vue/test-utils": "^1.1.1",
+		"babel-core": "^7.0.0-bridge.0",
+		"babel-jest": "^26.6.3",
 		"copyfiles": "^2.4.0",
 		"css-loader": "^5.0.1",
 		"eslint": "^7.14.0",
+		"jest": "^26.6.3",
 		"mkdirp": "^1.0.4",
+		"ts-jest": "^26.4.4",
 		"ts-loader": "^8.0.11",
 		"typescript": "^4.1.2",
+		"vue-jest": "^3.0.7",
 		"vue-loader": "^15.9.5",
 		"vue-style-loader": "^4.1.2",
 		"vue-template-compiler": "^2.6.12",
 		"webpack": "^5.6.0",
 		"webpack-cli": "^4.2.0"
+	},
+	"jest": {
+		"moduleFileExtensions": [
+			"js",
+			"ts",
+			"json",
+			"vue"
+		],
+		"moduleNameMapper": {
+			"^src/(.*)$": "<rootDir>/src/$1"
+		},
+		"transform": {
+			"^.+\\.js?$": "babel-jest",
+			"^.+\\.vue?$": "vue-jest",
+			"^.+\\.tsx?$": "ts-jest"
+		},
+		"testURL": "http://localhost/",
+		"testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+		"transformIgnorePatterns": [
+			"<rootDir>/node_modules/(?!(@microsoft/(fast-components|fast-element|fast-foundation|fast-web-utilities|fast-colors)|lodash-es|exenv-es6))"
+		],
+		"setupFiles": [
+			"./src/testSetup.ts"
+		]
 	}
 }
