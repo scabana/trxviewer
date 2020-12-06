@@ -8,23 +8,23 @@ FASTButton;
 const itemPerLoad = 50;
 
 @Component({
-  components: {
-    Fragment,
-  }
+    components: {
+        Fragment,
+    }
 })
 export default class PartialList extends Vue {
-  public name = "partial-list";
+    public name = "partial-list";
 
-  private renderedCount = itemPerLoad;
+    private renderedCount = itemPerLoad;
 
-  @Prop() readonly items!: any[]
+    @Prop() readonly items!: any[]
 
-  get filteredItems() {
-    const items = [...this.items];
-    return items.slice(0, this.renderedCount);
-  }
+    get filteredItems() {
+        const items = [...this.items];
+        return items.slice(0, this.renderedCount);
+    }
 
-  private showMore() {
-    this.renderedCount += itemPerLoad;
-  }
+    private showMore() {
+        this.renderedCount += itemPerLoad;
+    }
 }

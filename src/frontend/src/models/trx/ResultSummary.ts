@@ -1,6 +1,6 @@
 
 interface ResultSummary {
-	outcome: string;
+    outcome: string;
 }
 
 export default ResultSummary;

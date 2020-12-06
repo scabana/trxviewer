@@ -13,65 +13,65 @@ FASTAccordion;
 FASTTextField;
 
 @Component({
-	components: {
-		UnitTestResultGroup
-	}
+    components: {
+        UnitTestResultGroup
+    }
 })
 export default class PartialList extends Vue {
-	public name = "test-run";
+    public name = "test-run";
 
-	@Prop() readonly testRun!: TestRun
-	@Prop() readonly testRunState!: TestRunState
+    @Prop() readonly testRun!: TestRun
+    @Prop() readonly testRunState!: TestRunState
 
-	get groupedResults() {
+    get groupedResults() {
 
-		const results = [...this.testRun.results];
+        const results = [...this.testRun.results];
 
-		results.sort((left, right) => {
-			if (left.outcome == right.outcome) {
-				return left.testName.localeCompare(right.testName);
-			}
-			if (left.outcome === "Failed") {
-				return -1;
-			}
-			if (right.outcome === "Failed") {
-				return 1;
-			}
-			return left.outcome.localeCompare(right.outcome);
-		});
+        results.sort((left, right) => {
+            if (left.outcome == right.outcome) {
+                return left.testName.localeCompare(right.testName);
+            }
+            if (left.outcome === "Failed") {
+                return -1;
+            }
+            if (right.outcome === "Failed") {
+                return 1;
+            }
+            return left.outcome.localeCompare(right.outcome);
+        });
 
-		return groupBy(results, item => item.outcome);
-	}
+        return groupBy(results, item => item.outcome);
+    }
 
-	private getGroupState(state: string): GroupState<UnitTestResultState> {
+    private getGroupState(state: string): GroupState<UnitTestResultState> {
 
-		let groupState = this.testRunState.resultGroups[state];
+        let groupState = this.testRunState.resultGroups[state];
 
-		if (!groupState) {
-			groupState = {
-				expanded: {
-					isExpanded: state == "Failed"
-				},
-				itemStates: {}
-			};
+        if (!groupState) {
+            groupState = {
+                expanded: {
+                    isExpanded: state == "Failed"
+                },
+                itemStates: {}
+            };
 
-			this.testRun.results.forEach(element => {
-				if (element.outcome == state) {
-					groupState.itemStates[element.testId] = {
-						testId: element.testId,
-						expanded: {
-							isExpanded: false
-						}
-					};
-				}
-			});
+            this.testRun.results.forEach(element => {
+                if (element.outcome == state) {
+                    groupState.itemStates[element.testId] = {
+                        testId: element.testId,
+                        expanded: {
+                            isExpanded: false
+                        }
+                    };
+                }
+            });
 
-			this.$set(this.testRunState.resultGroups, state, groupState);
-		}
+            this.$set(this.testRunState.resultGroups, state, groupState);
+        }
 
-		return groupState;
+        return groupState;
 
-	}
+    }
 
-	private getStyle = getStyle
+    private getStyle = getStyle
 }

@@ -1,76 +1,76 @@
 {
-	"name": "trxviewer",
-	"displayName": "Trx viewer",
-	"description": "Allows visualizing .trx files.",
-	"version": "0.0.6",
-	"enableProposedApi": false,
-	"publisher": "scabana",
-	"engines": {
-		"vscode": "^1.46.0"
-	},
-	"categories": [
-		"Visualization",
-		"Other"
-	],
-	"keywords": [
-		"Testing",
-		"trx",
-		"MsTest",
-		"VsTest",
-		"xUnit"
-	],
-	"activationEvents": [
-		"onCustomEditor:trxviewer"
-	],
-	"icon": "icon.ico",
-	"license": "../LICENSE",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/scabana/trxviewer.git"
-	},
-	"bugs": {
-		"url": "https://github.com/scabana/trxviewer/issues"
-	},
-	"main": "./vscode-trxviewer/extension.js",
-	"contributes": {
-		"customEditors": [
-			{
-				"viewType": "trxviewer",
-				"displayName": "Trx viewer",
-				"selector": [
-					{
-						"filenamePattern": "*.trx"
-					}
-				]
-			}
-		],
-		"configuration": {
-			"title": "TrxViewer",
-			"properties": {
-				"trxviewer.enableSourceMaps": {
-					"type": "boolean",
-					"default": false,
-					"description": "Allows seeing original source code when using Webview Developer Tools."
-				}
-			}
-		}
-	},
-	"scripts": {
-		"compile": "tsc -p ./",
-		"lint": "eslint . --ext .ts,.tsx",
-		"watch": "tsc -w -p ./",
-		"install:out": "copy \"package.json\" \"../../out/package.json\" && cd static && xcopy . ..\\..\\..\\out /Y/E/I && cd ../../../out && npm install --only=production",
-		"linux:install:out": "cp package.json package-lock.json ../../LICENSE ../../out/ && cd static && cp -r ./* ../../../out && cd ../../../out && npm ci",
-		"vsce": "vsce package --baseContentUrl https://github.com/scabana/trxviewer/raw/main/ --baseImagesUrl https://github.com/scabana/trxviewer/raw/main/"
-	},
-	"devDependencies": {
-		"@types/node": "^14.14.9",
-		"@types/vscode": "^1.46.0",
-		"@typescript-eslint/eslint-plugin": "^4.8.2",
-		"@typescript-eslint/parser": "^4.8.2",
-		"eslint": "^7.14.0",
-		"typescript": "^4.1.2",
-		"vsce": "^1.81.1"
-	},
-	"dependencies": {}
+  "name": "trxviewer",
+  "displayName": "Trx viewer",
+  "description": "Allows visualizing .trx files.",
+  "version": "0.0.6",
+  "enableProposedApi": false,
+  "publisher": "scabana",
+  "engines": {
+    "vscode": "^1.46.0"
+  },
+  "categories": [
+    "Visualization",
+    "Other"
+  ],
+  "keywords": [
+    "Testing",
+    "trx",
+    "MsTest",
+    "VsTest",
+    "xUnit"
+  ],
+  "activationEvents": [
+    "onCustomEditor:trxviewer"
+  ],
+  "icon": "icon.ico",
+  "license": "../LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/scabana/trxviewer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/scabana/trxviewer/issues"
+  },
+  "main": "./vscode-trxviewer/extension.js",
+  "contributes": {
+    "customEditors": [
+      {
+        "viewType": "trxviewer",
+        "displayName": "Trx viewer",
+        "selector": [
+          {
+            "filenamePattern": "*.trx"
+          }
+        ]
+      }
+    ],
+    "configuration": {
+      "title": "TrxViewer",
+      "properties": {
+        "trxviewer.enableSourceMaps": {
+          "type": "boolean",
+          "default": false,
+          "description": "Allows seeing original source code when using Webview Developer Tools."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "lint": "eslint . --ext .ts,.tsx",
+    "watch": "tsc -w -p ./",
+    "install:out": "copy \"package.json\" \"../../out/package.json\" && cd static && xcopy . ..\\..\\..\\out /Y/E/I && cd ../../../out && npm install --only=production",
+    "linux:install:out": "cp package.json package-lock.json ../../LICENSE ../../out/ && cd static && cp -r ./* ../../../out && cd ../../../out && npm ci",
+    "vsce": "vsce package --baseContentUrl https://github.com/scabana/trxviewer/raw/main/ --baseImagesUrl https://github.com/scabana/trxviewer/raw/main/"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.9",
+    "@types/vscode": "^1.46.0",
+    "@typescript-eslint/eslint-plugin": "^4.8.2",
+    "@typescript-eslint/parser": "^4.8.2",
+    "eslint": "^7.14.0",
+    "typescript": "^4.1.2",
+    "vsce": "^1.81.1"
+  },
+  "dependencies": {}
 }

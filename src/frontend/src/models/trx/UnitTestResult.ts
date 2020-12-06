@@ -1,7 +1,7 @@
 interface UnitTestResult {
-	testName: string;
-	outcome: string;
-	testId: string;
+    testName: string;
+    outcome: string;
+    testId: string;
 }
 
 export default UnitTestResult;

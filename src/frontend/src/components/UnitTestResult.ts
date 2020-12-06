@@ -11,42 +11,42 @@ import { getTestModel, getTestResultOutputModel } from "../AppContext";
 FASTAccordionItem;
 
 @Component({
-  components: {
-    NavToTestLink
-  },
+    components: {
+        NavToTestLink
+    },
 })
 export default class UnitTestResult extends Vue {
-  public name = "unit-test-result";
+    public name = "unit-test-result";
 
-  private expandedOnce = false;
-  private output: TestResultOutputModel | null = null;
-  private testModel: TestModel | null = null;
+    private expandedOnce = false;
+    private output: TestResultOutputModel | null = null;
+    private testModel: TestModel | null = null;
 
-  @Prop() readonly item!: UnitTestResultModel
-  @Prop() readonly itemState!: UnitTestResultState
+    @Prop() readonly item!: UnitTestResultModel
+    @Prop() readonly itemState!: UnitTestResultState
 
-  public created() {
-    if (this.itemState.expanded.isExpanded === true) {
-      this.loadTestResult();
+    public created() {
+        if (this.itemState.expanded.isExpanded === true) {
+            this.loadTestResult();
+        }
     }
-  }
 
-  private onAccordionItemChanged() {
-    const accordionItem = this.$refs.accordionItem as FASTAccordionItem;
+    private onAccordionItemChanged() {
+        const accordionItem = this.$refs.accordionItem as FASTAccordionItem;
 
-    this.itemState.expanded.isExpanded = accordionItem.expanded;
+        this.itemState.expanded.isExpanded = accordionItem.expanded;
 
-    this.loadTestResult();
-  }
-
-  private loadTestResult() {
-
-    if (this.expandedOnce === true) {
-      return;
+        this.loadTestResult();
     }
-    this.expandedOnce = true;
 
-    this.testModel = getTestModel(this.item.testId);
-    this.output = getTestResultOutputModel(this.item.testId);
-  }
+    private loadTestResult() {
+
+        if (this.expandedOnce === true) {
+            return;
+        }
+        this.expandedOnce = true;
+
+        this.testModel = getTestModel(this.item.testId);
+        this.output = getTestResultOutputModel(this.item.testId);
+    }
 }
