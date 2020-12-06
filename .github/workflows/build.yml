@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag trxviewer:build
+      - name: "Extract artifacts to disk"
+        run: mkdir $(pwd)/out && docker run --name build --mount type=bind,source=$(pwd)/out,target=/extract trxviewer:build && docker wait build
+      - name: Upload vsix Build Artifact
+        uses: actions/upload-artifact@v2.2.1
+        with:
+          path: ./out/*.vsix
+          if-no-files-found: error
+      - name: Publish test results
+        uses: mikepenz/action-junit-report@a1848183796ab25257f486396a45968a3e27d387
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          report_paths: ./out/testresults.xml
+      - name: Fail on test failures
+        run: exitCode=`cat ../../out/testExitCode` && exit $exitCode
+      - name: Publish to vs marketplace
+        if: github.ref == 'refs/heads/main'
+        env:
+          PAT: ${{ secrets.PUBLISH_PAT }}
+        run: |
+          PublishedExtensionInfo=$(npx vsce show --json scabana.trxviewer)
+
+          # knowing we got node, let's extract values using some plain old js!
+
+          PublishedVersion=$(node -e "console.log(JSON.parse(process.argv[1]).versions[0].version)" "$PublishedExtensionInfo")
+          CurrentCIVersion=$(node -e "console.log(JSON.parse(process.argv[1]).version)" "$(cat ./src/vscode-trxviewer/package.json)")
+
+          if [ $PublishedVersion == $CurrentCIVersion ]; then
+            echo "Version not updated, not need to publish!"
+            exit 0
+          fi
+
+          echo "Publishing extension!"
+
+          cd src/vsmarketplacepublish
+          PACKAGEPATH="$(find ../../out/*.vsix)"
+          npm ci
+          echo PACKAGEPATH
+          echo $PACKAGEPATH
+          npx vsce publish --packagePath $PACKAGEPATH -p $PAT
