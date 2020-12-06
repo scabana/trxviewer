@@ -1,84 +1,84 @@
 // See https://go.microsoft.com/fwlink/?LinkId=733558
 // for the documentation about the tasks.json format
 {
-	"version": "2.0.0",
-	"tasks": [
-		{
-			"type": "npm",
-			"label": "extension:watch",
-			"script": "watch",
-			"problemMatcher": "$tsc-watch",
-			"options": {
-				"cwd": "${workspaceFolder}/src/vscode-trxviewer"
-			},
-			"isBackground": true,
-			"presentation": {
-				"reveal": "never"
-			},
-			"group": "build"
-		},
-		{
-			"type": "npm",
-			"script": "install:out",
-			"label": "npm:install:out",
-			"options": {
-				"cwd": "${workspaceFolder}/src/vscode-trxviewer"
-			},
-			"group": "build"
-		},
-		{
-			"type": "shell",
-			"label": "debug:copyfiles",
-			"group": "build",
-			"presentation": {
-				"reveal": "never"
-			},
-			"windows": {
-				"command": "rm -r ./out/media; Copy-Item -Recurse ./src/frontend/wwwroot ./out/media"
-			},
-			"command": "rm -r ./out/media "
-		},
-		{
-			"type": "npm",
-			"label": "fontend:watch",
-			"script": "fontend-watch",
-			"problemMatcher": {
-				"owner": "webpack",
-				"severity": "error",
-				"fileLocation": "relative",
-				"pattern": [
-					{
-						"regexp": "ERROR in \\[at-loader\\] ([^:]*):(\\d+):(\\d+)",
-						"file": 1,
-						"line": 2,
-						"column": 3
-					},
-					{
-						"regexp": "TS(.*)",
-						"message": 1
-					}
-				]
-			},
-			"options": {
-				"cwd": "${workspaceFolder}/src/frontend"
-			},
-			"isBackground": true,
-			"presentation": {
-				"reveal": "never"
-			},
-			"group": "build"
-		},
-		{
-			"label": "watch",
-			"dependsOn": [
-				"extension:watch",
-				"npm:install:out",
-				"fontend:watch"
-			],
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			}
-		}
-	]
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "label": "extension:watch",
+      "script": "watch",
+      "problemMatcher": "$tsc-watch",
+      "options": {
+        "cwd": "${workspaceFolder}/src/vscode-trxviewer"
+      },
+      "isBackground": true,
+      "presentation": {
+        "reveal": "never"
+      },
+      "group": "build"
+    },
+    {
+      "type": "npm",
+      "script": "install:out",
+      "label": "npm:install:out",
+      "options": {
+        "cwd": "${workspaceFolder}/src/vscode-trxviewer"
+      },
+      "group": "build"
+    },
+    {
+      "type": "shell",
+      "label": "debug:copyfiles",
+      "group": "build",
+      "presentation": {
+        "reveal": "never"
+      },
+      "windows": {
+        "command": "rm -r ./out/media; Copy-Item -Recurse ./src/frontend/wwwroot ./out/media"
+      },
+      "command": "rm -r ./out/media "
+    },
+    {
+      "type": "npm",
+      "label": "fontend:watch",
+      "script": "fontend-watch",
+      "problemMatcher": {
+        "owner": "webpack",
+        "severity": "error",
+        "fileLocation": "relative",
+        "pattern": [
+          {
+            "regexp": "ERROR in \\[at-loader\\] ([^:]*):(\\d+):(\\d+)",
+            "file": 1,
+            "line": 2,
+            "column": 3
+          },
+          {
+            "regexp": "TS(.*)",
+            "message": 1
+          }
+        ]
+      },
+      "options": {
+        "cwd": "${workspaceFolder}/src/frontend"
+      },
+      "isBackground": true,
+      "presentation": {
+        "reveal": "never"
+      },
+      "group": "build"
+    },
+    {
+      "label": "watch",
+      "dependsOn": [
+        "extension:watch",
+        "npm:install:out",
+        "fontend:watch"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
 }

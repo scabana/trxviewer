@@ -3,20 +3,35 @@
 // Hover to view descriptions of existing attributes.
 // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
 {
-	"version": "0.2.0",
-	"configurations": [
-		{
-			"name": "Run Extension",
-			"type": "extensionHost",
-			"request": "launch",
-			"runtimeExecutable": "${execPath}",
-			"args": [
-				"--extensionDevelopmentPath=${workspaceFolder}/out"
-			],
-			"outFiles": [
-				"${workspaceFolder}/out/**/*.*",
-			],
-			"preLaunchTask": "debug:copyfiles"
-		}
-	]
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run Extension",
+      "type": "extensionHost",
+      "request": "launch",
+      "runtimeExecutable": "${execPath}",
+      "args": [
+        "--extensionDevelopmentPath=${workspaceFolder}/out"
+      ],
+      "outFiles": [
+        "${workspaceFolder}/out/**/*.*",
+      ],
+      "preLaunchTask": "debug:copyfiles"
+    },
+    {
+      "name": "Debug Jest Tests",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/src/frontend",
+      "runtimeArgs": [
+        "--inspect-brk",
+        "./node_modules/jest/bin/jest",
+        "--runInBand",
+        "--coverage",
+        "false"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    }
+  ]
 }
