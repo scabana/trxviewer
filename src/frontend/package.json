@@ -3,7 +3,7 @@
 		"webpack:dev": "webpack",
 		"webpack:prod": "webpack --mode=production",
 		"fontend-watch": "webpack --watch",
-		"lint": "eslint . --ext .ts,.tsx",
+		"lint": "eslint . --ext .ts,.tsx,.vue",
 		"test:unit": "jest"
 	},
 	"dependencies": {
@@ -17,19 +17,19 @@
 	},
 	"devDependencies": {
 		"@babel/core": "^7.12.9",
-		"@babel/plugin-proposal-export-default-from": "^7.12.1",
-		"@babel/plugin-proposal-export-namespace-from": "^7.12.1",
-		"@babel/plugin-transform-modules-commonjs": "^7.12.1",
 		"@babel/preset-env": "^7.12.7",
-		"@typescript-eslint/eslint-plugin": "^4.8.2",
-		"@typescript-eslint/parser": "^4.8.2",
+		"@typescript-eslint/eslint-plugin": "^4.4.0",
+		"@typescript-eslint/parser": "^4.4.0",
+		"@vue/eslint-config-typescript": "^7.0.0",
 		"@vue/test-utils": "^1.1.1",
 		"babel-core": "^7.0.0-bridge.0",
 		"babel-jest": "^26.6.3",
 		"copyfiles": "^2.4.0",
 		"css-loader": "^5.0.1",
-		"eslint": "^7.14.0",
+		"eslint": "^7.0.0",
+		"eslint-plugin-vue": "^7.0.0",
 		"jest": "^26.6.3",
+		"jest-junit": "^12.0.0",
 		"mkdirp": "^1.0.4",
 		"ts-jest": "^26.4.4",
 		"ts-loader": "^8.0.11",
@@ -63,6 +63,16 @@
 		],
 		"setupFiles": [
 			"./src/testSetup.ts"
+		],
+		"reporters": [
+			"default",
+			[
+				"jest-junit",
+				{
+					"outputDirectory": "./../../out",
+					"outputName": "testresults.xml"
+				}
+			]
 		]
 	}
 }

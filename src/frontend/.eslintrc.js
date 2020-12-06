@@ -2,13 +2,14 @@
 // eslint-disable-next-line no-undef
 module.exports = {
 	root: true,
-	parser: '@typescript-eslint/parser',
+	parser: 'vue-eslint-parser',
 	plugins: [
 		'@typescript-eslint',
 	],
 	extends: [
+		'plugin:vue/essential',
 		'eslint:recommended',
-		'plugin:@typescript-eslint/recommended',
+		'@vue/typescript/recommended'
 	],
 	rules: {
 		'semi': [2, "always"],
