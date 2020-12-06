@@ -19,7 +19,5 @@ describe('FilteredResults.vue', () => {
     const wrapper = shallowMount(FilteredResults, { propsData: { items, filter } });
 
     expect((wrapper.vm as any).filteredItems).toEqual([items[0]]);
-
-    expect(false).toBeTruthy();
   });
 });
