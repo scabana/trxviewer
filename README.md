@@ -1,5 +1,3 @@
-
-
 # vscode-trxviewer
 
 Welcome to the home of the Txr viewer extension.

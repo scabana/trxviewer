@@ -1,24 +1,24 @@
 export function getStyle(outcome: string) {
-	if (outcome == "Passed") {
-		return { color: "var(--green, green)" };
-	}
-	if (outcome == "Failed") {
-		return { color: "var(--red, red)" };
-	}
+    if (outcome == "Passed") {
+        return { color: "var(--green, green)" };
+    }
+    if (outcome == "Failed") {
+        return { color: "var(--red, red)" };
+    }
 }
 
 export function normalizeColor(color: string | any) {
-	if (typeof color != "string") {
-		return color;
-	}
+    if (typeof color != "string") {
+        return color;
+    }
 
-	if (color.startsWith("rgba")) {
+    if (color.startsWith("rgba")) {
 
-		const content = (/rgba\((?<content>.+)\)/.exec(color) as any).groups.content;
-		const newContent = content.split(",").splice(0, 3).join(",");
+        const content = (/rgba\((?<content>.+)\)/.exec(color) as any).groups.content;
+        const newContent = content.split(",").splice(0, 3).join(",");
 
-		return `rgb(${newContent})`;
-	}
+        return `rgb(${newContent})`;
+    }
 
-	return color;
+    return color;
 }

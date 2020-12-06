@@ -1,13 +1,13 @@
 declare global {
-	interface Window {
-		acquireVsCodeApi: () => VsCodeWebView;
-	}
+    interface Window {
+        acquireVsCodeApi: () => VsCodeWebView;
+    }
 
-	interface VsCodeWebView {
-		getState: () => any,
-		setState: (state: any) => void,
-		postMessage: (message: any) => void
-	}
+    interface VsCodeWebView {
+        getState: () => any,
+        setState: (state: any) => void,
+        postMessage: (message: any) => void
+    }
 
 }
 

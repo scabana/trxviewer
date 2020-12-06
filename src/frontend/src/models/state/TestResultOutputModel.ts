@@ -1,7 +1,7 @@
 import ErrorInfo from "../ErrorInfo";
 
 interface TestResultOutputModel {
-	errorInfo: ErrorInfo
+    errorInfo: ErrorInfo
 }
 
 export default TestResultOutputModel;
