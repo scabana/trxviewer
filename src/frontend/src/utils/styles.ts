@@ -1,4 +1,4 @@
-export function getStyle(outcome: string) {
+export function getOutcomeStyle(outcome: string) {
     if (outcome == "Passed") {
         return { color: "var(--green, green)" };
     }

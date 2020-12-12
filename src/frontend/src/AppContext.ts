@@ -4,7 +4,7 @@ import Callbacks from './models/Callbacks';
 import TestRunState from './models/state/TestRunState';
 import Theme from './models/Theme';
 import TestRun from './models/trx/TestRun';
-import { parseDocumentToTestRun, parseStringXml } from './utils/trx';
+import * as trx from './utils/trx';
 
 declare global {
     interface Window {
@@ -47,34 +47,16 @@ export function createApp(cb: Callbacks) {
 }
 
 export function getTestModel(testId: string) {
-    const test = testRunDocument?.querySelector(`TestDefinitions>UnitTest[id="${testId}"]`);
-    const testMethod = test?.querySelector("TestMethod");
-
-    return {
-        name: test?.getAttribute("name") || "",
-        testMethodClassName: testMethod?.getAttribute("className") || "",
-        testMethodName: testMethod?.getAttribute("name") || ""
-    };
+    return trx.getTestModel(testRunDocument, testId);
 }
 
 export function getTestResultOutputModel(testId: string) {
-    const errorInfo = testRunDocument?.querySelector(`Results>UnitTestResult[testId="${testId}"] > Output > ErrorInfo`);
-
-    if (errorInfo == null) {
-        return null;
-    }
-
-    return {
-        errorInfo: {
-            message: errorInfo?.querySelector("Message")?.innerHTML || "",
-            stackTrace: errorInfo?.querySelector("StackTrace")?.innerHTML || ""
-        }
-    };
+    return trx.getTestResultOutputModel(testRunDocument, testId);
 }
 
 export function updateTestRun(content: string) {
-    testRunDocument = parseStringXml(content);
-    app!.testRun = parseDocumentToTestRun(testRunDocument);
+    testRunDocument = trx.parseStringXml(content);
+    app!.testRun = trx.getTestRun(testRunDocument);
 }
 
 export function updateTestRunState(state: TestRunState) {

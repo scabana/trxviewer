@@ -1,6 +1,8 @@
+import TestResultOutputModel from "../models/state/TestResultOutputModel";
+import TestModel from "../models/trx/TestModel";
 import TestRun from "../models/trx/TestRun";
 
-export function parseDocumentToTestRun(xmlDocument: Document) {
+export function getTestRun(xmlDocument: Document): TestRun {
 
     const summary = xmlDocument.documentElement.querySelector("ResultSummary");
 
@@ -25,4 +27,30 @@ export function parseDocumentToTestRun(xmlDocument: Document) {
 export function parseStringXml(string: string) {
     const parser = new DOMParser();
     return parser.parseFromString(string, "application/xml");
+}
+
+export function getTestModel(xmlDocument: Document | null, testId: string): TestModel {
+    const test = xmlDocument?.querySelector(`TestDefinitions>UnitTest[id="${testId}"]`);
+    const testMethod = test?.querySelector("TestMethod");
+
+    return {
+        name: test?.getAttribute("name") || "",
+        testMethodClassName: testMethod?.getAttribute("className") || "",
+        testMethodName: testMethod?.getAttribute("name") || ""
+    };
+}
+
+export function getTestResultOutputModel(xmlDocument: Document | null, testId: string): TestResultOutputModel | null {
+    const errorInfo = xmlDocument?.querySelector(`Results>UnitTestResult[testId="${testId}"] > Output > ErrorInfo`);
+
+    if (errorInfo == null) {
+        return null;
+    }
+
+    return {
+        errorInfo: {
+            message: errorInfo?.querySelector("Message")?.innerHTML || "",
+            stackTrace: errorInfo?.querySelector("StackTrace")?.innerHTML || ""
+        }
+    };
 }

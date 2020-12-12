@@ -7,8 +7,8 @@ jest.mock("../AppContext", () => {
     return {
         getTestModel: jest.fn(),
         getTestResultOutputModel: jest.fn()
-    }
-})
+    };
+});
 
 describe('UnitTestResult.vue', () => {
 

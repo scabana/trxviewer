@@ -9,11 +9,11 @@ describe('TestRun.vue', () => {
                 outcome: "Failed"
             },
             results: []
-        }
+        };
 
         const testRunState = {
 
-        }
+        };
 
         const wrapper = shallowMount(TestRun, {
             propsData: { testRun, testRunState }
@@ -28,10 +28,10 @@ describe('TestRun.vue', () => {
                 outcome: "Failed"
             },
             results: []
-        }
+        };
 
         const testRunState = {
-        }
+        };
 
         const wrapper = shallowMount(TestRun, {
             propsData: { testRun, testRunState }
@@ -49,12 +49,12 @@ describe('TestRun.vue', () => {
                 { outcome: "Failed", testName: "1" },
                 { outcome: "Success", testName: "2" }
             ]
-        }
+        };
 
         const testRunState = {
             filter: "test filter",
             resultGroups: {}
-        }
+        };
 
         const wrapper = shallowMount(TestRun, {
             propsData: { testRun, testRunState }
@@ -72,12 +72,12 @@ describe('TestRun.vue', () => {
             results: [
                 { outcome: "Failed", testName: "1", testId: testId }
             ]
-        }
+        };
 
         const testRunState = {
             filter: "test filter",
             resultGroups: {}
-        }
+        };
 
         const wrapper = shallowMount(TestRun, {
             propsData: { testRun, testRunState }
@@ -93,12 +93,12 @@ describe('TestRun.vue', () => {
                 outcome: "Failed"
             },
             results: []
-        }
+        };
 
         const testRunState = {
             filter: "",
             resultGroups: {}
-        }
+        };
 
         const wrapper = shallowMount(TestRun, {
             propsData: { testRun, testRunState }
