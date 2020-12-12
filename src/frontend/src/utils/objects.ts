@@ -1,9 +1,10 @@
-export const groupBy = <TItem>(xs: TItem[], key: (item: TItem) => string) => {
+export const groupBy = <TItem, TValue extends { toString(): string }>(xs: TItem[], key: (item: TItem) => TValue) => {
 
     const result: { [state: string]: TItem[] } = {};
 
     return xs.reduce(function (rv: { [state: string]: TItem[] }, x: TItem) {
-        const group = rv[key(x)] = rv[key(x)] || [];
+        const keyValue = key(x).toString();
+        const group = rv[keyValue] = rv[keyValue] || [];
 
         group.push(x);
 

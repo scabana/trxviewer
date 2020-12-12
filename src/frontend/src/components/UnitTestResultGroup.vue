@@ -22,7 +22,7 @@ import UnitTestResult from "./UnitTestResult.vue";
 import UnitTestResultModel from "../models/trx/UnitTestResult";
 import FilteredResults from "./FilteredResults.vue";
 import PartialList from "./PartialList.vue";
-import { getStyle } from "../utils/styles";
+import { getOutcomeStyle } from "../utils/styles";
 import { FASTButton, FASTAccordion, FASTAccordionItem } from "@microsoft/fast-components";
 import { Component, Prop } from "vue-property-decorator";
 import GroupState from "../models/state/GroupState";
@@ -67,6 +67,6 @@ export default class UnitTestResultGroup extends Vue {
     this.groupState.expanded.isExpanded = accordionItem.expanded;
   }
 
-  private getStyle = getStyle;
+  private getStyle = getOutcomeStyle;
 }
 </script>

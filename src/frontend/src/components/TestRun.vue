@@ -17,7 +17,7 @@
 import Vue from "vue";
 import { FASTAccordion, FASTTextField } from "@microsoft/fast-components";
 import UnitTestResultGroup from "./UnitTestResultGroup.vue";
-import { getStyle } from "../utils/styles";
+import { getOutcomeStyle } from "../utils/styles";
 import { Component, Prop } from "vue-property-decorator";
 import TestRun from "../models/trx/TestRun";
 import TestRunState from "../models/state/TestRunState";
@@ -86,6 +86,6 @@ export default class PartialList extends Vue {
     return groupState;
   }
 
-  private getStyle = getStyle;
+  private getStyle = getOutcomeStyle;
 }
 </script>
