@@ -47,6 +47,7 @@ describe('UnitTestResultGroup.vue', () => {
         });
 
         expect(wrapper.find("[slot=heading]").text()).toBe(result);
+        expect(wrapper.find("[slot=end]").text()).toBe("1 items");
         expect(wrapper.find("[name=testitem]").text()).toBe(testName);
     });
 
