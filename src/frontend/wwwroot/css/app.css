@@ -49,21 +49,15 @@ body {
     background-color: var(--background-color)
 }
 
-#blazor-error-ui {
-    background: lightyellow;
-    bottom: 0;
-    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+/* Hiding the icon part and ajusting grid to remove icon. */
+.group::part(icon){
     display: none;
-    left: 0;
-    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
-    position: fixed;
-    width: 100%;
-    z-index: 1000;
 }
-
-#blazor-error-ui .dismiss {
-    cursor: pointer;
-    position: absolute;
-    right: 0.75rem;
-    top: 0.5rem;
+.group::part(heading){
+    grid-template-columns: auto 1fr auto;
+}
+.group::part(end)
+{
+    /* Taken from https://github.com/microsoft/fast/blob/906d9c2f42172c7e0c9041e0d6fb07609c83cfbd/packages/web-components/fast-components/src/accordion-item/accordion-item.styles.ts#L47 */
+    padding-right: calc((6 + (var(--design-unit) * 2 * var(--density))) * 1px);
 }

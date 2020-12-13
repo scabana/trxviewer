@@ -1,3 +1,6 @@
+# 0.0.7
+- Total per result kind(Passed, Failed, etc.)
+  
 # 0.0.6
 - Display states is now restored
   -  Filter

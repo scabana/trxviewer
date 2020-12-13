@@ -1,6 +1,7 @@
 <template>
-  <fast-accordion-item :expanded="expanded" ref="accordionItem" @change="onAccordionItemChanged">
+  <fast-accordion-item :expanded="expanded" ref="accordionItem" @change="onAccordionItemChanged" class="group">
     <span slot="heading" :style="getStyle(result)">{{ result }}</span>
+    <span slot="end" style="float:right">{{items.length}} items</span>
     <div style="display: flex; flex-direction: column; width: 100%">
       <filtered-results :items="items" :filter="filterCallback">
         <template v-slot:default="filtered">
