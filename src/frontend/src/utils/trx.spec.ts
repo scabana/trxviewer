@@ -88,8 +88,8 @@ describe("trx.ts", () => {
         const document = parseStringXml(sample);
         const testRun = getTestRun(document);
 
-        expect(testRun.resultSummary).toBeDefined();
-        expect(testRun.resultSummary.outcome).toBe("Failed");
+        expect(testRun.summary).toBeDefined();
+        expect(testRun.summary.outcome).toBe("Failed");
         expect(testRun.results).toBeDefined();
         expect(testRun.results.length).toBe(1);
         expect(testRun.results[0].outcome).toBe("Failed");

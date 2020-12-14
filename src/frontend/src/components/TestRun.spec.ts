@@ -3,25 +3,6 @@ import TestRun from './TestRun.vue';
 
 describe('TestRun.vue', () => {
 
-    test('Test run outcome is shown', () => {
-        const testRun = {
-            resultSummary: {
-                outcome: "Failed"
-            },
-            results: []
-        };
-
-        const testRunState = {
-
-        };
-
-        const wrapper = shallowMount(TestRun, {
-            propsData: { testRun, testRunState }
-        });
-
-        expect(wrapper.find("span").text()).toBe(testRun.resultSummary.outcome);
-    });
-
     test('Filter initial state is empty', () => {
         const testRun = {
             resultSummary: {
@@ -30,8 +11,7 @@ describe('TestRun.vue', () => {
             results: []
         };
 
-        const testRunState = {
-        };
+        const testRunState = {};
 
         const wrapper = shallowMount(TestRun, {
             propsData: { testRun, testRunState }
@@ -111,5 +91,29 @@ describe('TestRun.vue', () => {
         expect(testRunState.filter).toBe(newFilter);
     });
 
+    test('Summary gets values passed to it.', async () => {
+        const newFilter = "new filter!";
+        const testRun = {
+            summary: "this is a summary",
+            results: []
+        };
+
+        const testRunState = {
+            filter: "",
+            resultGroups: {},
+            summary: "this is a summary state"
+        };
+
+        const wrapper = shallowMount(TestRun, {
+            propsData: { testRun, testRunState }
+        });
+
+
+        const summary = wrapper.find("test-run-summary-stub");
+
+        expect(summary.exists()).toBeTruthy();
+        expect(summary.attributes("summary")).toBe(testRun.summary);
+        expect(summary.attributes("summarystate")).toBe(testRunState.summary);
+    });
 
 });

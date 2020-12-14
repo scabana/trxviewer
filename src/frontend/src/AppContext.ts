@@ -9,6 +9,7 @@ import * as trx from './utils/trx';
 declare global {
     interface Window {
         app: Vue;
+        summaryExpandedByDefault: boolean;
     }
 }
 
@@ -28,7 +29,12 @@ const state: TestRunState = {
     resultGroups: {
 
     },
-    filter: ""
+    filter: "",
+    summary: {
+        expanded: {
+            isExpanded: window.summaryExpandedByDefault
+        }
+    }
 };
 
 export function createApp(cb: Callbacks) {

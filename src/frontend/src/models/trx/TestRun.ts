@@ -1,8 +1,8 @@
 import UnitTestResult from "./UnitTestResult";
-import ResultSummary from "./ResultSummary";
+import Summary from "./Summary";
 
 interface TestRun {
-    resultSummary: ResultSummary;
+    summary: Summary;
     results: UnitTestResult[];
 }
 

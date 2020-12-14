@@ -5,10 +5,18 @@ import TestRun from "../models/trx/TestRun";
 export function getTestRun(xmlDocument: Document): TestRun {
 
     const summary = xmlDocument.documentElement.querySelector("ResultSummary");
+    const counters = summary?.querySelector("Counters");
 
     const jsonObject: TestRun = {
-        resultSummary: {
-            outcome: summary?.getAttribute("outcome") || ""
+        summary: {
+            outcome: summary?.getAttribute("outcome") || "",
+            counters: {
+                executed: Number.parseInt(counters?.getAttribute("executed") || "0"),
+                failed: Number.parseInt(counters?.getAttribute("failed") || "0"),
+                passed: Number.parseInt(counters?.getAttribute("passed") || "0"),
+                total: Number.parseInt(counters?.getAttribute("total") || "0")
+            },
+            runInfos: [{ timeStamp: new Date(summary?.querySelector("RunInfos>RunInfo")?.getAttribute("timestamp") || new Date()) }],
         },
         results: []
     };

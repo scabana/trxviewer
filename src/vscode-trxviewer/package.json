@@ -2,7 +2,7 @@
   "name": "trxviewer",
   "displayName": "Trx viewer",
   "description": "Allows visualizing .trx files.",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "enableProposedApi": false,
   "publisher": "scabana",
   "engines": {
@@ -51,6 +51,11 @@
           "type": "boolean",
           "default": false,
           "description": "Allows seeing original source code when using Webview Developer Tools."
+        },
+        "trxviewer.summaryExpandedByDefault": {
+          "type": "boolean",
+          "default": true,
+          "description": "Summary is expanded by default."
         }
       }
     }

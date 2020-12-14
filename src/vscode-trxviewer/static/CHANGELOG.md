@@ -1,3 +1,8 @@
+# 0.0.8
+- Summary at the top showing few information
+  <br>
+  Expanded by default, setting(`trxviewer.summaryExpandedByDefault`) added to allow collapsing it by default.
+ 
 # 0.0.7
 - Total per result kind(Passed, Failed, etc.)
   
