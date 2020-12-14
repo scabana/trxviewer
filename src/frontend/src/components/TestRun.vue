@@ -1,10 +1,6 @@
 <template>
   <div>
-    <div>
-      <h3>
-        Outcome: <span :style="getStyle(testRun.resultSummary.outcome)">{{ testRun.resultSummary.outcome }}</span>
-      </h3>
-    </div>
+    <test-run-summary :summary="testRun.summary" :summaryState="testRunState.summary"></test-run-summary>
     <div>
       <fast-text-field :value="testRunState.filter" v-on:input="testRunState.filter = $event.target.value" placeholder="Filter" style="display: block"> </fast-text-field>
       <fast-accordion>
@@ -15,9 +11,9 @@
 </template>
 <script lang="ts">
 import Vue from "vue";
-import { FASTAccordion, FASTTextField } from "@microsoft/fast-components";
+import { FASTTextField } from "@microsoft/fast-components";
 import UnitTestResultGroup from "./UnitTestResultGroup.vue";
-import { getOutcomeStyle } from "../utils/styles";
+import TestRunSummary from "./TestRunSummary.vue";
 import { Component, Prop } from "vue-property-decorator";
 import TestRun from "../models/trx/TestRun";
 import TestRunState from "../models/state/TestRunState";
@@ -25,12 +21,12 @@ import GroupState from "../models/state/GroupState";
 import UnitTestResultState from "../models/state/UnitTestResultState";
 import { groupBy } from "../utils/objects";
 
-FASTAccordion;
 FASTTextField;
 
 @Component({
   components: {
     UnitTestResultGroup,
+    TestRunSummary,
   },
 })
 export default class PartialList extends Vue {
@@ -85,7 +81,5 @@ export default class PartialList extends Vue {
 
     return groupState;
   }
-
-  private getStyle = getOutcomeStyle;
 }
 </script>

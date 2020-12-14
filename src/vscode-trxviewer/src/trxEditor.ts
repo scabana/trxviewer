@@ -103,6 +103,7 @@ export class TrxEditorProvider implements vscode.CustomTextEditorProvider {
         indexText = indexText.replace(/<script/gi, `<script nonce="${nonce}"`);
         indexText = indexText.replace(/<link/gi, `<link nonce="${nonce}"`);
         indexText = indexText.replace("<base href=\"/\" />", `<base href="${base}/" />`);
+        indexText = indexText.replace("var summaryExpandedByDefault = true;", `var summaryExpandedByDefault = ${vscode.workspace.getConfiguration().get("trxviewer.summaryExpandedByDefault")};`);
 
         if (vscode.workspace.getConfiguration().get("trxviewer.enableSourceMaps") === true) {
             try {
