@@ -1,13 +1,9 @@
+import Counters from "./Counters";
 import RunInfo from "./RunInfo";
 
 interface Summary {
     outcome: string;
-    counters: {
-        total: number;
-        executed: number;
-        passed: number;
-        failed: number;
-    },
+    counters: Counters,
     runInfos: RunInfo[];
 }
 
