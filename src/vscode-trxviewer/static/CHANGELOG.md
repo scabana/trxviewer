@@ -1,3 +1,6 @@
+# 0.0.9
+- Groundwork for localization is done. French is now available.
+  
 # 0.0.8
 - Summary at the top showing few information
   <br>
