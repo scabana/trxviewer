@@ -3,19 +3,23 @@
     <span slot="heading">{{ item.testName }}</span>
     <div v-if="expandedOnce">
       <div name="classname">
-        <span>{{ $t("ClassName") }}:</span>
+        <span class="title">{{ $t("ClassName") }}:</span>
         <span>{{ testModel.testMethodClassName }}</span>
       </div>
       <div name="methodname">
-        <span>{{ $t("MethodName") }}:</span>
+        <span class="title">{{ $t("MethodName") }}:</span>
         <nav-to-test-link :testId="item.testId" :testMethodName="testModel.testMethodName"></nav-to-test-link>
       </div>
+      <div name="stdOut" v-if="output && output.stdOut">
+        <span class="title">{{ $t("StdOut") }}:</span>
+        <pre>{{ output.stdOut }}</pre>
+      </div>
       <div name="errorinfomessage" v-if="output && output.errorInfo && output.errorInfo.message">
-        <div>{{ $t("ErrorMessage") }}:</div>
+        <div class="title">{{ $t("ErrorMessage") }}:</div>
         <pre>{{ output.errorInfo.message }}</pre>
       </div>
       <div name="errorinfostacktrace" v-if="output && output.errorInfo && output.errorInfo.stackTrace">
-        <div>{{ $t("StackTrace") }}:</div>
+        <div class="title">{{ $t("StackTrace") }}:</div>
         <pre>{{ output.errorInfo.stackTrace }}</pre>
       </div>
     </div>
@@ -27,11 +31,13 @@ en:
   MethodName: Method name
   ErrorMessage: Error message
   StackTrace: Stack Trace
+  StdOut: Standard output
 fr:
   ClassName: Nom de la classe
   MethodName: Nom de la méthode
   ErrorMessage: Message d'erreur
   StackTrace: Pile d'exception
+  StdOut: Sortie standard
 </i18n>
 <script lang="ts">
 import Vue from "vue";

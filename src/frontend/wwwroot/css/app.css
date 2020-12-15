@@ -61,3 +61,7 @@ body {
     /* Taken from https://github.com/microsoft/fast/blob/906d9c2f42172c7e0c9041e0d6fb07609c83cfbd/packages/web-components/fast-components/src/accordion-item/accordion-item.styles.ts#L47 */
     padding-right: calc((6 + (var(--design-unit) * 2 * var(--density))) * 1px);
 }
+
+.title{
+    font-weight: bold;
+}

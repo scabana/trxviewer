@@ -49,13 +49,11 @@ export function getTestModel(xmlDocument: Document | null, testId: string): Test
 }
 
 export function getTestResultOutputModel(xmlDocument: Document | null, testId: string): TestResultOutputModel | null {
-    const errorInfo = xmlDocument?.querySelector(`Results>UnitTestResult[testId="${testId}"] > Output > ErrorInfo`);
-
-    if (errorInfo == null) {
-        return null;
-    }
+    const output = xmlDocument?.querySelector(`Results>UnitTestResult[testId="${testId}"] > Output`);
+    const errorInfo = output?.querySelector(`ErrorInfo`);
 
     return {
+        stdOut: output?.querySelector("StdOut")?.innerHTML || "",
         errorInfo: {
             message: errorInfo?.querySelector("Message")?.innerHTML || "",
             stackTrace: errorInfo?.querySelector("StackTrace")?.innerHTML || ""
