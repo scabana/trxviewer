@@ -1,6 +1,7 @@
 import { FASTAccordionItem } from '@microsoft/fast-components';
 import { shallowMount } from '@vue/test-utils';
 import TestRunSummary from './TestRunSummary.vue';
+import i18n from '../utils/i18n';
 
 describe('TestRunSummary.vue', () => {
 
@@ -25,7 +26,8 @@ describe('TestRunSummary.vue', () => {
         };
 
         const wrapper = shallowMount(TestRunSummary, {
-            propsData: { summary, summaryState }
+            propsData: { summary, summaryState },
+            i18n
         });
 
         expect(wrapper.find("span").text()).toBe(summary.outcome);
@@ -52,10 +54,11 @@ describe('TestRunSummary.vue', () => {
         };
 
         const wrapper = shallowMount(TestRunSummary, {
-            propsData: { summary, summaryState }
+            propsData: { summary, summaryState },
+            i18n
         });
 
-        expect(wrapper.find("#time").text()).toBe(`Time: ${summary.runInfos[0].timeStamp.toLocaleString()}`);
+        expect(wrapper.find("#time").text()).toBe(`Time: ${wrapper.vm.$d(summary.runInfos[0].timeStamp, "long")}`);
         expect(wrapper.find("#countersTotal").text()).toBe(`Total: ${summary.counters.total}`);
         expect(wrapper.find("#countersExecuted").text()).toBe(`Executed: ${summary.counters.executed}`);
         expect(wrapper.find("#countersPassed").text()).toBe(`Passed: ${summary.counters.passed}`);
@@ -84,7 +87,8 @@ describe('TestRunSummary.vue', () => {
         };
 
         const wrapper = shallowMount(TestRunSummary, {
-            propsData: { summary, summaryState }
+            propsData: { summary, summaryState },
+            i18n
         });
 
         expect(wrapper.find("fast-accordion-item[expanded=false]").exists()).toBeFalsy();
@@ -112,7 +116,8 @@ describe('TestRunSummary.vue', () => {
         };
 
         const wrapper = shallowMount(TestRunSummary, {
-            propsData: { summary, summaryState }
+            propsData: { summary, summaryState },
+            i18n
         });
 
         expect(wrapper.find("fast-accordion-item[expanded=true]").exists()).toBeTruthy();
@@ -140,7 +145,8 @@ describe('TestRunSummary.vue', () => {
         };
 
         const wrapper = shallowMount(TestRunSummary, {
-            propsData: { summary, summaryState }
+            propsData: { summary, summaryState },
+            i18n
         });
 
         //For some reason, was not able to get a simple click event to register, just setting

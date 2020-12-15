@@ -20,6 +20,13 @@ let config = {
                 loader: "vue-loader",
             },
             {
+                resourceQuery: /blockType=i18n/,
+                use: [
+                    { loader: '@kazupon/vue-i18n-loader' },
+                    { loader: 'yaml-loader' }
+                ]
+            },
+            {
                 test: /\.css$/,
                 use: ["css-loader"]
             },

@@ -2,6 +2,7 @@ import { shallowMount } from '@vue/test-utils';
 import UnitTestResult from './UnitTestResult.vue';
 import { getTestModel, getTestResultOutputModel } from "../AppContext";
 import AttrAsContent from '../utils/tests/AttrAsContent';
+import i18n from '../utils/i18n';
 
 jest.mock("../AppContext", () => {
     return {
@@ -51,7 +52,8 @@ describe('UnitTestResult.vue', () => {
             },
             stubs: {
                 "nav-to-test-link": AttrAsContent("testMethodName")
-            }
+            },
+            i18n
         });
 
         expect(wrapper.find("[slot=heading]").text()).toBe(testName);
@@ -100,12 +102,13 @@ describe('UnitTestResult.vue', () => {
             },
             stubs: {
                 "nav-to-test-link": AttrAsContent("testMethodName")
-            }
+            },
+            i18n
         });
 
         expect(wrapper.find("[slot=heading]").text()).toBe(testName);
         expect(wrapper.find("[name=classname]").text()).toBe(`Class name: ${testResult.testMethodClassName}`);
-        expect(wrapper.find("[name=errorinfomessage]").text()).toBe(`Message: ${testResultOuputModel.errorInfo.message}`);
+        expect(wrapper.find("[name=errorinfomessage]").text()).toBe(`Error message: ${testResultOuputModel.errorInfo.message}`);
         expect(wrapper.find("[name=errorinfostacktrace]").text()).toBe(`Stack Trace: ${testResultOuputModel.errorInfo.stackTrace}`);
     });
 
@@ -129,7 +132,8 @@ describe('UnitTestResult.vue', () => {
                     testId,
                     testName
                 }
-            }
+            },
+            i18n
         });
 
         expect(wrapper.find("[slot=heading]").text()).toBe(testName);

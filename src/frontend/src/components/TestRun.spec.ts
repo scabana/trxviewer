@@ -1,5 +1,6 @@
 import { shallowMount } from '@vue/test-utils';
 import TestRun from './TestRun.vue';
+import i18n from '../utils/i18n';
 
 describe('TestRun.vue', () => {
 
@@ -14,7 +15,8 @@ describe('TestRun.vue', () => {
         const testRunState = {};
 
         const wrapper = shallowMount(TestRun, {
-            propsData: { testRun, testRunState }
+            propsData: { testRun, testRunState },
+            i18n
         });
 
         expect(wrapper.find("fast-text-field").attributes("value")).toBeUndefined();
@@ -37,7 +39,8 @@ describe('TestRun.vue', () => {
         };
 
         const wrapper = shallowMount(TestRun, {
-            propsData: { testRun, testRunState }
+            propsData: { testRun, testRunState },
+            i18n
         });
 
         expect(wrapper.findAll("unit-test-result-group-stub").length).toBe(2);
@@ -60,7 +63,8 @@ describe('TestRun.vue', () => {
         };
 
         const wrapper = shallowMount(TestRun, {
-            propsData: { testRun, testRunState }
+            propsData: { testRun, testRunState },
+            i18n
         });
 
         expect((wrapper.find("unit-test-result-group-stub").vm as any).groupState.expanded.isExpanded).toBe(true);
@@ -81,7 +85,8 @@ describe('TestRun.vue', () => {
         };
 
         const wrapper = shallowMount(TestRun, {
-            propsData: { testRun, testRunState }
+            propsData: { testRun, testRunState },
+            i18n
         });
 
 
@@ -105,7 +110,8 @@ describe('TestRun.vue', () => {
         };
 
         const wrapper = shallowMount(TestRun, {
-            propsData: { testRun, testRunState }
+            propsData: { testRun, testRunState },
+            i18n
         });
 
 

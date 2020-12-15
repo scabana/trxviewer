@@ -2,13 +2,19 @@
   <div>
     <test-run-summary :summary="testRun.summary" :summaryState="testRunState.summary"></test-run-summary>
     <div>
-      <fast-text-field :value="testRunState.filter" v-on:input="testRunState.filter = $event.target.value" placeholder="Filter" style="display: block"> </fast-text-field>
+      <fast-text-field :value="testRunState.filter" v-on:input="testRunState.filter = $event.target.value" :placeholder="$t('Filter')" style="display: block"> </fast-text-field>
       <fast-accordion>
         <unit-test-result-group v-for="(val, key) in groupedResults" :key="key" :result="key" :items="val" :filter="testRunState.filter" :groupState="getGroupState(key)"></unit-test-result-group>
       </fast-accordion>
     </div>
   </div>
 </template>
+<i18n lang="yml">
+en:
+  Filter: Filter
+fr:
+  Filter: Filtrer
+</i18n>
 <script lang="ts">
 import Vue from "vue";
 import { FASTTextField } from "@microsoft/fast-components";

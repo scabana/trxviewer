@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils';
 import AttrAsContent from '../utils/tests/AttrAsContent';
 import UnitTestResultGroup from './UnitTestResultGroup.vue';
+import i18n from '../utils/i18n';
 
 describe('UnitTestResultGroup.vue', () => {
 
@@ -43,11 +44,12 @@ describe('UnitTestResultGroup.vue', () => {
             },
             stubs: {
                 "unit-test-result": AttrAsContent(attrs => attrs.item.testName, { attrs: { name: "testitem" } })
-            }
+            },
+            i18n
         });
 
         expect(wrapper.find("[slot=heading]").text()).toBe(result);
-        expect(wrapper.find("[slot=end]").text()).toBe("1 items");
+        expect(wrapper.find("[slot=end]").text()).toBe("1 item");
         expect(wrapper.find("[name=testitem]").text()).toBe(testName);
     });
 

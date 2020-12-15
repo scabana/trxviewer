@@ -13,3 +13,5 @@ Object.defineProperty(window, 'matchMedia', {
         dispatchEvent: jest.fn(),
     })),
 });
+
+document.documentElement.lang = "en";

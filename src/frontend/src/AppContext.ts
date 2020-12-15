@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import i18n from './utils/i18n';
 import App from './App.vue';
 import Callbacks from './models/Callbacks';
 import TestRunState from './models/state/TestRunState';
@@ -20,7 +21,6 @@ declare module 'vue/types/vue' {
         theme: Theme
     }
 }
-
 
 let app: Vue | null = null;
 let callbacks: Callbacks | null = null;
@@ -48,7 +48,8 @@ export function createApp(cb: Callbacks) {
             testRunState: state,
             theme: null
         },
-        methods: cb
+        methods: cb,
+        i18n
     });
 }
 

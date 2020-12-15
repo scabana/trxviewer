@@ -1,7 +1,7 @@
 <template>
   <fast-accordion-item :expanded="expanded" ref="accordionItem" @change="onAccordionItemChanged" class="group">
-    <span slot="heading" :style="getStyle(result)">{{ result }}</span>
-    <span slot="end" style="float:right">{{items.length}} items</span>
+    <span slot="heading" :style="getStyle(result)">{{ $t(`testResult.${result}`, { fallback: result }) }}</span>
+    <span slot="end" style="float: right">{{ $tc("items", items.length, { count: items.length }) }}</span>
     <div style="display: flex; flex-direction: column; width: 100%">
       <filtered-results :items="items" :filter="filterCallback">
         <template v-slot:default="filtered">
@@ -17,6 +17,13 @@
     </div>
   </fast-accordion-item>
 </template>
+<i18n src="../i18n.yml"  lang="yml"></i18n>
+<i18n lang="yml">
+en:
+  items: "no item | 1 item | {count} items"
+fr:
+  items: "aucun item | 1 élément | {count} éléments"
+</i18n>
 <script lang="ts">
 import Vue from "vue";
 import UnitTestResult from "./UnitTestResult.vue";
