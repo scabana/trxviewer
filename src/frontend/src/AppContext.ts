@@ -40,8 +40,6 @@ const state: TestRunState = {
 export function createApp(cb: Callbacks) {
     callbacks = cb;
 
-
-
     window.app = app = new Vue({
         el: "#app",
         render: r => r(App),
