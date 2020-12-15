@@ -3,24 +3,36 @@
     <span slot="heading">{{ item.testName }}</span>
     <div v-if="expandedOnce">
       <div name="classname">
-        <span>Class name:</span>
+        <span>{{ $t("ClassName") }}:</span>
         <span>{{ testModel.testMethodClassName }}</span>
       </div>
       <div name="methodname">
-        <span>Method name:</span>
+        <span>{{ $t("MethodName") }}:</span>
         <nav-to-test-link :testId="item.testId" :testMethodName="testModel.testMethodName"></nav-to-test-link>
       </div>
       <div name="errorinfomessage" v-if="output && output.errorInfo && output.errorInfo.message">
-        <div>Message:</div>
+        <div>{{ $t("ErrorMessage") }}:</div>
         <pre>{{ output.errorInfo.message }}</pre>
       </div>
       <div name="errorinfostacktrace" v-if="output && output.errorInfo && output.errorInfo.stackTrace">
-        <div>Stack Trace:</div>
+        <div>{{ $t("StackTrace") }}:</div>
         <pre>{{ output.errorInfo.stackTrace }}</pre>
       </div>
     </div>
   </fast-accordion-item>
 </template>
+<i18n lang="yml">
+en:
+  ClassName: Class name
+  MethodName: Method name
+  ErrorMessage: Error message
+  StackTrace: Stack Trace
+fr:
+  ClassName: Nom de la classe
+  MethodName: Nom de la méthode
+  ErrorMessage: Message d'erreur
+  StackTrace: Pile d'exception
+</i18n>
 <script lang="ts">
 import Vue from "vue";
 import UnitTestResultModel from "../models/trx/UnitTestResult";

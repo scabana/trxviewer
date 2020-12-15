@@ -1,5 +1,6 @@
 import { shallowMount, Wrapper } from '@vue/test-utils';
 import PartialList from './PartialList.vue';
+import i18n from '../utils/i18n';
 
 describe('PartialList.vue', () => {
 
@@ -7,7 +8,8 @@ describe('PartialList.vue', () => {
         const items = Array.from(Array(49).keys());
 
         const wrapper = shallowMount(PartialList, {
-            propsData: { items }
+            propsData: { items },
+            i18n
         });
 
         expect(wrapper.find("fast-button").exists()).toBe(false);
@@ -17,7 +19,8 @@ describe('PartialList.vue', () => {
         const items = Array.from(Array(51).keys());
 
         const wrapper = shallowMount(PartialList, {
-            propsData: { items }
+            propsData: { items },
+            i18n
         });
 
         expect(wrapper.find("fast-button").exists()).toBe(true);
@@ -27,7 +30,8 @@ describe('PartialList.vue', () => {
         const items = Array.from(Array(201).keys());
 
         const wrapper = shallowMount(PartialList, {
-            propsData: { items }
+            propsData: { items },
+            i18n
         });
 
         const checkAndClick = async (wrapper: Wrapper<any>, count: number) => {

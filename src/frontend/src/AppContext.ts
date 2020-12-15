@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import i18n from './utils/i18n';
 import App from './App.vue';
 import Callbacks from './models/Callbacks';
 import TestRunState from './models/state/TestRunState';
@@ -40,6 +41,8 @@ const state: TestRunState = {
 export function createApp(cb: Callbacks) {
     callbacks = cb;
 
+
+
     window.app = app = new Vue({
         el: "#app",
         render: r => r(App),
@@ -48,7 +51,8 @@ export function createApp(cb: Callbacks) {
             testRunState: state,
             theme: null
         },
-        methods: cb
+        methods: cb,
+        i18n
     });
 }
 

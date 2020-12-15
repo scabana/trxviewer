@@ -2,9 +2,15 @@
   <fragment>
     <a v-if="!testNotFound" @click="openTest" href="#">{{ testMethodName }} </a>
     <span v-if="testNotFound" href="#" :id="`navToTest${testId}`">{{ testMethodName }} </span>
-    <fast-tooltip v-if="testNotFound" :anchor="`navToTest${testId}`">Test method not found</fast-tooltip>
+    <fast-tooltip v-if="testNotFound" :anchor="`navToTest${testId}`">{{ $t("Test_method_not_found") }}</fast-tooltip>
   </fragment>
 </template>
+<i18n lang="yml">
+en:
+  Test_method_not_found: Test method not found
+fr:
+  Test_method_not_found: Méthode non trouvée
+</i18n>
 <script lang="ts">
 import Vue from "vue";
 import { Fragment } from "vue-fragment";

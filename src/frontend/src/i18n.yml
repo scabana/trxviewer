@@ -1,0 +1,11 @@
+en:
+  Outcome: Outcome
+  testResult:
+    Passed: Passed
+    Failed: Failed
+
+fr:
+  Outcome: Résultat
+  testResult:
+    Passed: Succès
+    Failed: Échoué

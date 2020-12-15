@@ -1,5 +1,6 @@
 import { shallowMount } from '@vue/test-utils';
 import NavToTestLink from './NavToTestLink.vue';
+import i18n from '../utils/i18n';
 
 describe('NavToTestLink.vue', () => {
 
@@ -16,7 +17,7 @@ describe('NavToTestLink.vue', () => {
         };
 
         const wrapper = shallowMount(NavToTestLink, {
-            propsData: { testId, testMethodName }, parentComponent: $Root
+            propsData: { testId, testMethodName }, parentComponent: $Root, i18n
         });
 
         expect(raiseTestMethodExists).toBeCalledTimes(1);
@@ -49,7 +50,7 @@ describe('NavToTestLink.vue', () => {
         });
 
         const wrapper = shallowMount(NavToTestLink, {
-            propsData: { testId, testMethodName }, parentComponent: $Root
+            propsData: { testId, testMethodName }, parentComponent: $Root, i18n
         });
 
         expect(addedCallback).toBeDefined();
@@ -89,7 +90,7 @@ describe('NavToTestLink.vue', () => {
         });
 
         const wrapper = shallowMount(NavToTestLink, {
-            propsData: { testId, testMethodName }, parentComponent: $Root
+            propsData: { testId, testMethodName }, parentComponent: $Root, i18n
         });
 
         expect(callback).toBeDefined();
