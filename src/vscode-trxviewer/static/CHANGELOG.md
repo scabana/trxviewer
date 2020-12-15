@@ -1,3 +1,7 @@
+# 1.0.0
+- Welcome to v1, we got a good set of feature!
+- Standard output for a test will now be diplayed.
+
 # 0.0.9
 - Groundwork for localization is done. French is now available.
   
