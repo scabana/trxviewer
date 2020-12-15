@@ -1,5 +1,5 @@
 # 1.0.0
-- Welcome to v1, we got a good set of feature!
+- Welcome to v1, we got a good feature set!
 - Standard output for a test will now be diplayed.
 
 # 0.0.9
