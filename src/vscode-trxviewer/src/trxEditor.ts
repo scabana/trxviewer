@@ -105,6 +105,9 @@ export class TrxEditorProvider implements vscode.CustomTextEditorProvider {
         indexText = indexText.replace("<base href=\"/\" />", `<base href="${base}/" />`);
         indexText = indexText.replace("var summaryExpandedByDefault = true;", `var summaryExpandedByDefault = ${vscode.workspace.getConfiguration().get("trxviewer.summaryExpandedByDefault")};`);
 
+        const locale = JSON.parse(process.env.VSCODE_NLS_CONFIG!).locale;
+        indexText = indexText.replace("lang=\"en\"", `lang="${locale}"`);
+
         if (vscode.workspace.getConfiguration().get("trxviewer.enableSourceMaps") === true) {
             try {
                 await vscode.workspace.fs.stat(vscode.Uri.file(path.join(this.context.extensionPath, 'media', 'scripts', 'app.debug.js')));

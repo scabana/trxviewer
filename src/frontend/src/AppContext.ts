@@ -22,7 +22,6 @@ declare module 'vue/types/vue' {
     }
 }
 
-
 let app: Vue | null = null;
 let callbacks: Callbacks | null = null;
 let testRunDocument: Document | null = null;

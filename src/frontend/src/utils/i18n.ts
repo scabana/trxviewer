@@ -37,8 +37,7 @@ const dateTimeFormats = {
 };
 
 const i18n = new VueI18n({
-    locale: document.documentElement.lang
-    , // set locale
+    locale: document.documentElement.lang,
     fallbackLocale: "en",
     missing: (locale, key, vm, values) => {
 
