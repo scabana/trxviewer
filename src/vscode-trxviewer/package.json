@@ -2,7 +2,7 @@
   "name": "trxviewer",
   "displayName": "Trx viewer",
   "description": "Allows visualizing .trx files.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "enableProposedApi": false,
   "publisher": "scabana",
   "engines": {

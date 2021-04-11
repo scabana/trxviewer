@@ -1,5 +1,6 @@
-﻿html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+﻿html,
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 fast-design-system-provider {
@@ -22,16 +23,18 @@ fast-card > fast-button {
 }
 
 :root {
-    --navbar-height:94px;
-    --section-height-spacing:100px 0px;
-    --section-height-spacing-mobile:50px 0px}
+    --navbar-height: 94px;
+    --section-height-spacing: 100px 0px;
+    --section-height-spacing-mobile: 50px 0px;
+}
 
 html {
     background-color: var(--background-color);
-    font: 16px aktiv-grotesk,Segoe UI,Arial,Helvetica,sans-serif
+    font: 16px aktiv-grotesk, Segoe UI, Arial, Helvetica, sans-serif;
 }
 
-body,html {
+body,
+html {
     box-sizing: border-box;
     overflow-x: hidden;
     scroll-behavior: smooth;
@@ -45,23 +48,23 @@ body {
     padding: 5px;
 }
 
-.body-provider,body {
-    background-color: var(--background-color)
+.body-provider,
+body {
+    background-color: var(--background-color);
 }
 
 /* Hiding the icon part and ajusting grid to remove icon. */
-.group::part(icon){
+.group::part(icon) {
     display: none;
 }
-.group::part(heading){
+.group::part(heading) {
     grid-template-columns: auto 1fr auto;
 }
-.group::part(end)
-{
+.group::part(end) {
     /* Taken from https://github.com/microsoft/fast/blob/906d9c2f42172c7e0c9041e0d6fb07609c83cfbd/packages/web-components/fast-components/src/accordion-item/accordion-item.styles.ts#L47 */
     padding-right: calc((6 + (var(--design-unit) * 2 * var(--density))) * 1px);
 }
 
-.title{
+.title {
     font-weight: bold;
 }
