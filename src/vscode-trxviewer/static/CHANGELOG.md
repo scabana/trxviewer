@@ -1,18 +1,21 @@
+# 1.0.1
+- Independant horizontal scroll in a test result ([#38](https://github.com/scabana/trxviewer/issues/38))
+
 # 1.0.0
 - Welcome to v1, we got a good feature set!
 - Standard output for a test will now be diplayed.
 
 # 0.0.9
 - Groundwork for localization is done. French is now available.
-  
+
 # 0.0.8
 - Summary at the top showing few information
   <br>
   Expanded by default, setting(`trxviewer.summaryExpandedByDefault`) added to allow collapsing it by default.
- 
+
 # 0.0.7
 - Total per result kind(Passed, Failed, etc.)
-  
+
 # 0.0.6
 - Display states is now restored
   -  Filter
@@ -30,7 +33,6 @@
 # 0.0.3
 - Information page added (README.md)
 - Changelog added
-  
+
 # 0.0.2
 - Extension published by github actions
-  

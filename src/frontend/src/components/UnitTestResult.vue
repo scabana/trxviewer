@@ -1,7 +1,7 @@
 <template>
   <fast-accordion-item @change="onAccordionItemChanged" ref="accordionItem" :expanded="itemState.expanded.isExpanded">
     <span slot="heading">{{ item.testName }}</span>
-    <div v-if="expandedOnce">
+    <div v-if="expandedOnce" style="overflow-x: auto">
       <div name="classname">
         <span class="title">{{ $t("ClassName") }}:</span>
         <span>{{ testModel.testMethodClassName }}</span>
