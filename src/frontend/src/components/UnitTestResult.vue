@@ -54,8 +54,8 @@ FASTAccordionItem;
 
 @Component({
   components: {
-    NavToTestLink
-  }
+    NavToTestLink,
+  },
 })
 export default class UnitTestResult extends Vue {
   public name = "unit-test-result";
