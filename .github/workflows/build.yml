@@ -20,7 +20,7 @@ jobs:
           path: ./out/*.vsix
           if-no-files-found: error
       - name: Publish test results
-        uses: mikepenz/action-junit-report@a1848183796ab25257f486396a45968a3e27d387
+        uses: mikepenz/action-junit-report@f97744b37ef9c243bd7e48b318897429cf898c62
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           report_paths: ./out/testresults.xml
