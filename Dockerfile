@@ -1,7 +1,8 @@
-FROM node:12-alpine3.12 AS build-env
+FROM node:16-alpine3.15 AS build-env
 COPY . ./app
 
 WORKDIR /app/src/frontend
+RUN apk add --update --no-cache python3 make g++ && ln -sf python3 /usr/bin/python
 RUN npm ci && \
     npm run lint && \
     npm run webpack:prod && \
@@ -18,7 +19,7 @@ RUN npm ci && \
 WORKDIR /app/out
 RUN npm run vsce
 
-FROM node:12-alpine3.12
+FROM node:16-alpine3.15
 
 COPY --from=build-env /app/out/*.vsix /app/out/testExitCode /app/out/testresults.xml /out/
 

@@ -1,14 +1,13 @@
 import { mount } from '@vue/test-utils';
+
+import i18n from '../utils/i18n';
 import AttrAsContent from '../utils/tests/AttrAsContent';
 import UnitTestResultGroup from './UnitTestResultGroup.vue';
-import i18n from '../utils/i18n';
 
-describe('UnitTestResultGroup.vue', () => {
-
+describe("UnitTestResultGroup.vue", () => {
     //TODO: add more tests, this is pretty light.
 
-    test('A unit-test-result is in the output', () => {
-
+    test("A unit-test-result is in the output", () => {
         const testResult = {
             testMethodName: "some test method name",
             testMethodClassName: "some test class name"
@@ -52,6 +51,4 @@ describe('UnitTestResultGroup.vue', () => {
         expect(wrapper.find("[slot=end]").text()).toBe("1 item");
         expect(wrapper.find("[name=testitem]").text()).toBe(testName);
     });
-
-
 });

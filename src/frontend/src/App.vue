@@ -1,53 +1,52 @@
 <template>
-  <fast-design-system-provider use-defaults ref="designSystem">
     <test-run v-if="$root.testRun" :testRun="$root.testRun" :testRunState="$root.testRunState"></test-run>
-  </fast-design-system-provider>
 </template>
 <script lang="ts">
-import { createColorPalette, FASTDesignSystemProvider, parseColorString } from "@microsoft/fast-components";
+import { provideFASTDesignSystem, allComponents, accentPalette, neutralPalette, DesignSystemProvider, PaletteRGB, SwatchRGB, accentColor, fillColor } from "@microsoft/fast-components";
+import { parseColorHexRGB } from "@microsoft/fast-colors";
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Watch } from "vue-property-decorator";
 import TestRun from "./components/TestRun.vue";
+import { init } from "./utils/ds";
 
-FASTDesignSystemProvider;
+init();
 
 @Component({
-  components: {
-    TestRun,
-  },
+    components: {
+        TestRun
+    }
 })
 export default class App extends Vue {
-  public name = "app";
+    public name = "app";
 
-  public mounted() {
-    const designSystem = this.$refs.designSystem as FASTDesignSystemProvider;
+    public mounted() {
+        let currentFillColor = fillColor.getValueFor(document.body);
+        let currentAccentColor = accentColor.getValueFor(document.body);
 
-    document.documentElement.style.setProperty("--background-color", designSystem.backgroundColor);
-  }
-
-  @Watch("$root.theme", { immediate: true })
-  public OnThemeChanged() {
-    if (this.$root.theme === null) {
-      return;
+        fillColor.setValueFor(document.documentElement, currentFillColor);
+        accentColor.setValueFor(document.documentElement, currentAccentColor);
     }
 
-    const designSystem = this.$refs.designSystem as FASTDesignSystemProvider;
-    const accentColor = this.$root.theme.accentColor;
-    const backgroundColor = this.$root.theme.backgroundColor;
+    @Watch("$root.theme", { immediate: true })
+    public OnThemeChanged() {
+        if (this.$root.theme === null) {
+            return;
+        }
 
-    if (designSystem.accentBaseColor != accentColor) {
-      designSystem.accentBaseColor = accentColor;
-      designSystem.accentPalette = createColorPalette(parseColorString(accentColor));
-    }
-    if (designSystem.backgroundColor != backgroundColor) {
-      designSystem.backgroundColor = backgroundColor;
-      designSystem.neutralPalette = createColorPalette(parseColorString(backgroundColor));
-    }
+        const newAccentColor = this.$root.theme.accentColor;
+        const backgroundColor = this.$root.theme.backgroundColor;
+        let currentAccentColor = accentColor.getValueFor(document.body);
+        let currentFillColor = fillColor.getValueFor(document.body);
 
-    if (document.documentElement.style.getPropertyValue("--background-color") != designSystem.backgroundColor) {
-      document.documentElement.style.setProperty("--background-color", designSystem.backgroundColor);
+        if (currentAccentColor.toColorString() != newAccentColor) {
+            accentPalette.withDefault(PaletteRGB.from(SwatchRGB.from(parseColorHexRGB(newAccentColor)!)));
+            currentAccentColor = accentColor.getValueFor(document.body);
+        }
+        if (currentFillColor.toColorString() != backgroundColor) {
+            neutralPalette.withDefault(PaletteRGB.from(SwatchRGB.from(parseColorHexRGB(backgroundColor)!)));
+            currentFillColor = fillColor.getValueFor(document.body);
+        }
     }
-  }
 }
 </script>
