@@ -1,8 +1,9 @@
 import { shallowMount } from '@vue/test-utils';
-import UnitTestResult from './UnitTestResult.vue';
-import { getTestModel, getTestResultOutputModel } from "../AppContext";
-import AttrAsContent from '../utils/tests/AttrAsContent';
+
+import { getTestModel, getTestResultOutputModel } from '../AppContext';
 import i18n from '../utils/i18n';
+import AttrAsContent from '../utils/tests/AttrAsContent';
+import UnitTestResult from './UnitTestResult.vue';
 
 jest.mock("../AppContext", () => {
     return {
@@ -11,10 +12,8 @@ jest.mock("../AppContext", () => {
     };
 });
 
-describe('UnitTestResult.vue', () => {
-
-    test('Displays test without errorInfo.', () => {
-
+describe("UnitTestResult.vue", () => {
+    test("Displays test without errorInfo.", () => {
         const testResult = {
             testMethodName: "some test method name",
             testMethodClassName: "some test class name"
@@ -22,12 +21,12 @@ describe('UnitTestResult.vue', () => {
         const testId = "sometestid";
         const testName = "some test name";
 
-        (getTestModel as jest.Mock<any, any>).mockImplementation(function (id) {
+        (getTestModel as jest.Mock<any, any>).mockImplementation(function(id) {
             expect(id).toBe(testId);
 
             return testResult;
         });
-        (getTestResultOutputModel as jest.Mock<any, any>).mockImplementation(function (id) {
+        (getTestResultOutputModel as jest.Mock<any, any>).mockImplementation(function(id) {
             expect(id).toBe(testId);
 
             return {
@@ -62,8 +61,7 @@ describe('UnitTestResult.vue', () => {
         expect(wrapper.find("[name=errorinfostacktrace]").exists()).toBeFalsy();
     });
 
-    test('Displays test with errorInfo.', () => {
-
+    test("Displays test with errorInfo.", () => {
         const testResult = {
             testMethodName: "some test method name",
             testMethodClassName: "some test class name"
@@ -77,12 +75,12 @@ describe('UnitTestResult.vue', () => {
         const testId = "sometestid";
         const testName = "some test name";
 
-        (getTestModel as jest.Mock<any, any>).mockImplementation(function (id) {
+        (getTestModel as jest.Mock<any, any>).mockImplementation(function(id) {
             expect(id).toBe(testId);
 
             return testResult;
         });
-        (getTestResultOutputModel as jest.Mock<any, any>).mockImplementation(function (id) {
+        (getTestResultOutputModel as jest.Mock<any, any>).mockImplementation(function(id) {
             expect(id).toBe(testId);
 
             return testResultOuputModel;
@@ -112,8 +110,7 @@ describe('UnitTestResult.vue', () => {
         expect(wrapper.find("[name=errorinfostacktrace]").text()).toBe(`Stack Trace: ${testResultOuputModel.errorInfo.stackTrace}`);
     });
 
-    test('Displays test with stdout data.', () => {
-
+    test("Displays test with stdout data.", () => {
         const testResult = {
             testMethodName: "some test method name",
             testMethodClassName: "some test class name"
@@ -122,12 +119,12 @@ describe('UnitTestResult.vue', () => {
         const testName = "some test name";
         const stdOut = "some stdout";
 
-        (getTestModel as jest.Mock<any, any>).mockImplementation(function (id) {
+        (getTestModel as jest.Mock<any, any>).mockImplementation(function(id) {
             expect(id).toBe(testId);
 
             return testResult;
         });
-        (getTestResultOutputModel as jest.Mock<any, any>).mockImplementation(function (id) {
+        (getTestResultOutputModel as jest.Mock<any, any>).mockImplementation(function(id) {
             expect(id).toBe(testId);
 
             return {
@@ -164,8 +161,7 @@ describe('UnitTestResult.vue', () => {
         expect(wrapper.find("[name=errorinfostacktrace]").exists()).toBeFalsy();
     });
 
-    test('Context.IsExpanded false, result is collapted on load.', () => {
-
+    test("Context.IsExpanded false, result is collapted on load.", () => {
         const testResult = {
             testMethodName: "",
             testMethodClassName: ""

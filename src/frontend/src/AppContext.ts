@@ -1,10 +1,11 @@
 import Vue from 'vue';
-import i18n from './utils/i18n';
+
 import App from './App.vue';
 import Callbacks from './models/Callbacks';
 import TestRunState from './models/state/TestRunState';
 import Theme from './models/Theme';
 import TestRun from './models/trx/TestRun';
+import i18n from './utils/i18n';
 import * as trx from './utils/trx';
 
 declare global {
@@ -14,11 +15,11 @@ declare global {
     }
 }
 
-declare module 'vue/types/vue' {
+declare module "vue/types/vue" {
     interface Vue extends Callbacks {
-        testRun: TestRun,
-        testRunState: TestRunState,
-        theme: Theme
+        testRun: TestRun;
+        testRunState: TestRunState;
+        theme: Theme;
     }
 }
 
@@ -26,9 +27,7 @@ let app: Vue | null = null;
 let callbacks: Callbacks | null = null;
 let testRunDocument: Document | null = null;
 const state: TestRunState = {
-    resultGroups: {
-
-    },
+    resultGroups: {},
     filter: "",
     summary: {
         expanded: {

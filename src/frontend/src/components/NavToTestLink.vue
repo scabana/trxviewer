@@ -1,9 +1,9 @@
 <template>
-  <fragment>
-    <a v-if="!testNotFound" @click="openTest" href="#">{{ testMethodName }} </a>
-    <span v-if="testNotFound" href="#" :id="`navToTest${testId}`">{{ testMethodName }} </span>
-    <fast-tooltip v-if="testNotFound" :anchor="`navToTest${testId}`">{{ $t("Test_method_not_found") }}</fast-tooltip>
-  </fragment>
+    <fragment>
+        <a v-if="!testNotFound" @click="openTest" href="#">{{ testMethodName }} </a>
+        <span v-if="testNotFound" href="#" :id="`navToTest${testId}`">{{ testMethodName }} </span>
+        <fast-tooltip v-if="testNotFound" :anchor="`navToTest${testId}`">{{ $t("Test_method_not_found") }}</fast-tooltip>
+    </fragment>
 </template>
 <i18n lang="yml">
 en:
@@ -15,43 +15,44 @@ fr:
 import Vue from "vue";
 import { Fragment } from "vue-fragment";
 import { Component, Prop } from "vue-property-decorator";
-import { FASTTooltip } from "@microsoft/fast-components";
+import { fastTooltip } from "@microsoft/fast-components";
+import { registerComponents } from "../utils/ds";
 
-FASTTooltip;
+registerComponents(fastTooltip());
 
 @Component({
-  components: {
-    Fragment,
-  },
+    components: {
+        Fragment
+    }
 })
 export default class NavToTestLink extends Vue {
-  public name = "nav-to-test-link";
+    public name = "nav-to-test-link";
 
-  private testNotFound = true;
+    private testNotFound = true;
 
-  @Prop() readonly testId!: string;
-  @Prop() readonly testMethodName!: number;
+    @Prop() readonly testId!: string;
+    @Prop() readonly testMethodName!: number;
 
-  private openTest() {
-    this.$root.navToTestMethod(this.testId);
-  }
-
-  private onWindowMessage(event: any) {
-    if (event.data.type === "testMethodFound") {
-      if (event.data.testId === this.testId) {
-        window.removeEventListener("message", this.onWindowMessage);
-        this.testNotFound = false;
-      }
+    private openTest() {
+        this.$root.navToTestMethod(this.testId);
     }
-  }
 
-  public created() {
-    window.addEventListener("message", this.onWindowMessage);
-    this.$root.raiseTestMethodExists(this.testId);
-  }
+    private onWindowMessage(event: any) {
+        if (event.data.type === "testMethodFound") {
+            if (event.data.testId === this.testId) {
+                window.removeEventListener("message", this.onWindowMessage);
+                this.testNotFound = false;
+            }
+        }
+    }
 
-  public destroyed() {
-    window.removeEventListener("message", this.onWindowMessage);
-  }
+    public created() {
+        window.addEventListener("message", this.onWindowMessage);
+        this.$root.raiseTestMethodExists(this.testId);
+    }
+
+    public destroyed() {
+        window.removeEventListener("message", this.onWindowMessage);
+    }
 }
 </script>

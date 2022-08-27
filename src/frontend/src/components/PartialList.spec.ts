@@ -1,10 +1,10 @@
 import { shallowMount, Wrapper } from '@vue/test-utils';
-import PartialList from './PartialList.vue';
+
 import i18n from '../utils/i18n';
+import PartialList from './PartialList.vue';
 
-describe('PartialList.vue', () => {
-
-    test('Not enough items, no more button shown', () => {
+describe("PartialList.vue", () => {
+    test("Not enough items, no more button shown", () => {
         const items = Array.from(Array(49).keys());
 
         const wrapper = shallowMount(PartialList, {
@@ -15,7 +15,7 @@ describe('PartialList.vue', () => {
         expect(wrapper.find("fast-button").exists()).toBe(false);
     });
 
-    test('Enough items, more button shown.', () => {
+    test("Enough items, more button shown.", () => {
         const items = Array.from(Array(51).keys());
 
         const wrapper = shallowMount(PartialList, {
@@ -26,7 +26,7 @@ describe('PartialList.vue', () => {
         expect(wrapper.find("fast-button").exists()).toBe(true);
     });
 
-    test('Multiple pages, should load more', async () => {
+    test("Multiple pages, should load more", async () => {
         const items = Array.from(Array(201).keys());
 
         const wrapper = shallowMount(PartialList, {
@@ -49,5 +49,4 @@ describe('PartialList.vue', () => {
         expect(wrapper.find("fast-button").exists()).toBe(false);
         expect((wrapper.vm as any).filteredItems.length).toBe(201);
     });
-
 });

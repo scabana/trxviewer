@@ -10,12 +10,8 @@
       "type": "extensionHost",
       "request": "launch",
       "runtimeExecutable": "${execPath}",
-      "args": [
-        "--extensionDevelopmentPath=${workspaceFolder}/out"
-      ],
-      "outFiles": [
-        "${workspaceFolder}/out/**/*.*",
-      ],
+      "args": ["--extensionDevelopmentPath=${workspaceFolder}/out"],
+      "outFiles": ["${workspaceFolder}/out/**/*.*"],
       "preLaunchTask": "debug:copyfiles"
     },
     {
@@ -23,13 +19,7 @@
       "type": "node",
       "request": "launch",
       "cwd": "${workspaceFolder}/src/frontend",
-      "runtimeArgs": [
-        "--inspect-brk",
-        "./node_modules/jest/bin/jest",
-        "--runInBand",
-        "--coverage",
-        "false"
-      ],
+      "runtimeArgs": ["--inspect-brk", "./node_modules/jest/bin/jest", "--runInBand", "--coverage", "false"],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"
     },
@@ -38,16 +28,7 @@
       "type": "node",
       "request": "launch",
       "cwd": "${workspaceFolder}/src/frontend",
-      "runtimeArgs": [
-        "--inspect-brk",
-        "./node_modules/jest/bin/jest",
-        "${fileBasenameNoExtension}",
-        "--runInBand",
-        "--no-cache",
-        "--watchAll",
-        "--coverage",
-        "false"
-      ],
+      "runtimeArgs": ["--inspect-brk", "./node_modules/jest/bin/jest", "${fileBasenameNoExtension}", "--runInBand", "--no-cache", "--watchAll", "--coverage", "false"],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"
     }

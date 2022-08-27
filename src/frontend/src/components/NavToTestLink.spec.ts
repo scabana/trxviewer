@@ -1,10 +1,10 @@
 import { shallowMount } from '@vue/test-utils';
-import NavToTestLink from './NavToTestLink.vue';
+
 import i18n from '../utils/i18n';
+import NavToTestLink from './NavToTestLink.vue';
 
-describe('NavToTestLink.vue', () => {
-
-    test('Method name shown when method has not been found yet.', () => {
+describe("NavToTestLink.vue", () => {
+    test("Method name shown when method has not been found yet.", () => {
         const testId = "sometestid";
         const testMethodName = "some.test.method.name";
         const raiseTestMethodExists = jest.fn();
@@ -17,7 +17,9 @@ describe('NavToTestLink.vue', () => {
         };
 
         const wrapper = shallowMount(NavToTestLink, {
-            propsData: { testId, testMethodName }, parentComponent: $Root, i18n
+            propsData: { testId, testMethodName },
+            parentComponent: $Root,
+            i18n
         });
 
         expect(raiseTestMethodExists).toBeCalledTimes(1);
@@ -28,7 +30,7 @@ describe('NavToTestLink.vue', () => {
         expect(window.addEventListener).toBeCalled();
     });
 
-    test('Link to method shown when method has been found.', async () => {
+    test("Link to method shown when method has been found.", async () => {
         const testId = "sometestid";
         const testMethodName = "some.test.method.name";
         const raiseTestMethodExists = jest.fn();
@@ -50,7 +52,9 @@ describe('NavToTestLink.vue', () => {
         });
 
         const wrapper = shallowMount(NavToTestLink, {
-            propsData: { testId, testMethodName }, parentComponent: $Root, i18n
+            propsData: { testId, testMethodName },
+            parentComponent: $Root,
+            i18n
         });
 
         expect(addedCallback).toBeDefined();
@@ -71,7 +75,7 @@ describe('NavToTestLink.vue', () => {
         expect(addedCallback).toEqual(removedCallback);
     });
 
-    test('Method name shown when method has not been found yet, but other method has been found.', async () => {
+    test("Method name shown when method has not been found yet, but other method has been found.", async () => {
         const testId = "sometestid";
         const testId2 = "sometestid2";
         const testMethodName = "some.test.method.name";
@@ -90,7 +94,9 @@ describe('NavToTestLink.vue', () => {
         });
 
         const wrapper = shallowMount(NavToTestLink, {
-            propsData: { testId, testMethodName }, parentComponent: $Root, i18n
+            propsData: { testId, testMethodName },
+            parentComponent: $Root,
+            i18n
         });
 
         expect(callback).toBeDefined();
