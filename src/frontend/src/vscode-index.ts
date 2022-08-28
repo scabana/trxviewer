@@ -1,6 +1,6 @@
 import { createApp, getApp, getTestModel, updateTestRun, updateTestRunState } from './AppContext';
-import { normalizeColor } from "./utils/styles";
-import { vscode } from "./utils/vscode";
+import { normalizeColor } from './utils/styles';
+import { vscode } from './utils/vscode';
 
 createApp({
     canShowTest: () => true,
@@ -12,7 +12,7 @@ createApp({
     navToTestMethod: testId => {
         const test = getTestModel(testId);
         vscode.postMessage({ type: "navToTest", symbolName: `${test.testMethodClassName}.${test.testMethodName}` });
-    },
+    }
 });
 
 const state = vscode.getState();
@@ -21,24 +21,26 @@ if (state) {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
-let watcherCancel: () => void = function () { };
+let watcherCancel: () => void = function() {};
 
 async function registerToStateChanges() {
     const app = getApp();
     await app.$nextTick();
 
-    watcherCancel = app.$watch("testRunState", function (newValue, oldValue) {
-
-        if (newValue !== undefined && newValue !== null) {
-            vscode.setState({ state: JSON.parse(JSON.stringify(newValue)) });
-            vscode.postMessage({ type: "stateUpdated" });
-        }
-    }, { deep: true });
+    watcherCancel = app.$watch(
+        "testRunState",
+        function(newValue, oldValue) {
+            if (newValue !== undefined && newValue !== null) {
+                vscode.setState({ state: JSON.parse(JSON.stringify(newValue)) });
+                vscode.postMessage({ type: "stateUpdated" });
+            }
+        },
+        { deep: true }
+    );
 }
 
 window.document.addEventListener("readystatechange", () => {
-    const observer = new MutationObserver(() => {
-
+    const setTheme = () => {
         const backgroundColor = normalizeColor(document.documentElement.style.getPropertyValue("--vscode-editorPane-background"));
         const accentColor = normalizeColor(document.documentElement.style.getPropertyValue("--vscode-focusBorder"));
 
@@ -47,21 +49,24 @@ window.document.addEventListener("readystatechange", () => {
             accentColor: accentColor,
             backgroundColor: backgroundColor
         };
-    });
+    };
 
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['style'] });
+    const observer = new MutationObserver(setTheme);
+
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["style"] });
+
+    setTheme();
 });
 
-window.addEventListener('message', event => {
+window.addEventListener("message", event => {
     const message = event.data; // The json data that the extension sent
     switch (message.type) {
-        case 'update':
-            {
-                const content = message.content;
-                watcherCancel();
-                updateTestRun(content);
-                registerToStateChanges();
-            }
+        case "update": {
+            const content = message.content;
+            watcherCancel();
+            updateTestRun(content);
+            registerToStateChanges();
+        }
     }
 });
 

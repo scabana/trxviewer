@@ -1,3 +1,7 @@
+# 1.0.3
+
+-   Fix themes (light themes were unusable)
+
 # 1.0.2
 
 -   Update Microsoft FAST, fixing:

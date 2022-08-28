@@ -26,12 +26,12 @@ fast-card > fast-button {
     --section-height-spacing:100px 0px;
     --section-height-spacing-mobile:50px 0px}
 
-html {
-    background-color: var(--background-color);
+html {    
     font: 16px aktiv-grotesk,Segoe UI,Arial,Helvetica,sans-serif
 }
 
 body,html {
+    background-color: var(--fill-color);
     box-sizing: border-box;
     overflow-x: hidden;
     scroll-behavior: smooth;

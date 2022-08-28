@@ -2,8 +2,8 @@
     <test-run v-if="$root.testRun" :testRun="$root.testRun" :testRunState="$root.testRunState"></test-run>
 </template>
 <script lang="ts">
-import { provideFASTDesignSystem, allComponents, accentPalette, neutralPalette, DesignSystemProvider, PaletteRGB, SwatchRGB, accentColor, fillColor } from "@microsoft/fast-components";
-import { parseColorHexRGB } from "@microsoft/fast-colors";
+import { accentPalette, neutralPalette, PaletteRGB, SwatchRGB, accentColor, fillColor } from "@microsoft/fast-components";
+import { parseColorHexRGB, parseColor } from "@microsoft/fast-colors";
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Watch } from "vue-property-decorator";
@@ -21,11 +21,7 @@ export default class App extends Vue {
     public name = "app";
 
     public mounted() {
-        let currentFillColor = fillColor.getValueFor(document.body);
-        let currentAccentColor = accentColor.getValueFor(document.body);
-
-        fillColor.setValueFor(document.documentElement, currentFillColor);
-        accentColor.setValueFor(document.documentElement, currentAccentColor);
+        this.OnThemeChanged();
     }
 
     @Watch("$root.theme", { immediate: true })
@@ -39,13 +35,14 @@ export default class App extends Vue {
         let currentAccentColor = accentColor.getValueFor(document.body);
         let currentFillColor = fillColor.getValueFor(document.body);
 
-        if (currentAccentColor.toColorString() != newAccentColor) {
-            accentPalette.withDefault(PaletteRGB.from(SwatchRGB.from(parseColorHexRGB(newAccentColor)!)));
-            currentAccentColor = accentColor.getValueFor(document.body);
-        }
         if (currentFillColor.toColorString() != backgroundColor) {
-            neutralPalette.withDefault(PaletteRGB.from(SwatchRGB.from(parseColorHexRGB(backgroundColor)!)));
-            currentFillColor = fillColor.getValueFor(document.body);
+            neutralPalette.withDefault(PaletteRGB.from(SwatchRGB.from(parseColor(backgroundColor)!)));
+
+            fillColor.withDefault(SwatchRGB.from(parseColorHexRGB(backgroundColor)!));
+        }
+
+        if (currentAccentColor.toColorString() != newAccentColor) {
+            accentPalette.withDefault(PaletteRGB.from(SwatchRGB.from(parseColor(newAccentColor)!)));
         }
     }
 }
